@@ -210,7 +210,7 @@ class TabChild extends Component {
             <p>TabView is a container component to group content with tabs.</p> */}
           </div>
         </div>
-        <Form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit}>
           <div className="content-section implementation">
             <Tabs
               defaultActiveKey={1}
@@ -610,7 +610,7 @@ class TabChild extends Component {
               </Button>
             </div>
           </div>
-        </Form>
+        </form>
       </div>
     );
   }
