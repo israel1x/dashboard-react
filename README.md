@@ -5,6 +5,7 @@
 Crystal React Bootstrap Dashboard is a beautiful, multi-purpose admin dashboard which is with React, Redux & Bootstrap. It contains a lot of simple and easy to use React components. You can use this dashboard to build many kind of dashboard include health, employees, company dashboard.
 
 This package includes:
+
 - Charts
 - Buttons
 - Notifications
@@ -21,19 +22,23 @@ In order to keep our stylesheet easy to maintain and customize by everyone. Styl
 **[Live preview](https://jslancerteam.github.io/crystal-dashboard/#/)**
 
 ## Get started
-*Development*
+
+_Development_
+
 ```
 git clone https://github.com/jslancerteam/crystal-dashboard
 npm install
 npm start
 ```
 
-*Build*
+_Build_
+
 ```
 npm run build
 ```
 
 ## File structure
+
 ```
 ./src/
 ├── assets
@@ -153,8 +158,13 @@ npm run build
 │   └── index.js
 └── registerServiceWorker.js
 ```
+
 ## Author
+
 David Tran [@davidtranwd](https://twitter.com/davidtranwd)
 
 ## License
+
 Licensed under MIT
+
+# dashboard-react
