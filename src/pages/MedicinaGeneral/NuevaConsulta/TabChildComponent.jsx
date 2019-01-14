@@ -210,13 +210,20 @@ class TabChild extends Component {
             <p>TabView is a container component to group content with tabs.</p> */}
           </div>
         </div>
-        <Form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit}>
           <div className="content-section implementation">
-            <TabView
+            <Tabs
+              defaultActiveKey={1}
+              id="tab-with-icons"
               activeIndex={this.state.activeIndex}
               onTabChange={e => this.setState({ activeIndex: e.index })}
             >
-              <TabPanel header="Consulta">
+              {/*   <TabView
+              activeIndex={this.state.activeIndex}
+              onTabChange={e => this.setState({ activeIndex: e.index })}
+            > */}
+
+              <Tab eventKey={1} title={<span>Consulta</span>}>
                 <Row form="true">
                   <Col sm="12">
                     <MyInput
@@ -242,8 +249,9 @@ class TabChild extends Component {
                     </FormGroup> */}
                   </Col>
                 </Row>
-              </TabPanel>
-              <TabPanel header="Antecedentes">
+              </Tab>
+
+              <Tab eventKey={2} title={<span>Antecedentes</span>}>
                 <Row form="true">
                   <Col sm="12">
                     <FormGroup>
@@ -267,6 +275,7 @@ class TabChild extends Component {
                       className="form-control"
                       value={this.state.antepersonal}
                     /> */}
+
                       <Label for="anteFamiliares">
                         3. Antecedentes Familiares
                       </Label>
@@ -282,12 +291,15 @@ class TabChild extends Component {
                     </FormGroup>
                   </Col>
                 </Row>
-              </TabPanel>
-              <TabPanel
+              </Tab>
+
+              {/* <TabPanel
                 header="Problema Actual"
                 //leftIcon="pi pi-search"
                 //rightIcon="pi pi-check"
-              >
+              > */}
+
+              <Tab eventKey={3} title={<span>Problema Actual</span>}>
                 <Row>
                   <Col sm="12">
                     <FormGroup>
@@ -306,8 +318,9 @@ class TabChild extends Component {
                     </FormGroup>
                   </Col>
                 </Row>
-              </TabPanel>
-              <TabPanel header="Pre-Consulta">
+              </Tab>
+              <Tab eventKey={4} title={<span>Pre-Consulta</span>}>
+                {/*  <TabPanel header="Pre-Consulta"> */}
                 <Row>
                   <Col sm="12">
                     <FormGroup>
@@ -338,8 +351,9 @@ class TabChild extends Component {
                     </FormGroup>
                   </Col>
                 </Row>
-              </TabPanel>
-              <TabPanel header="Examen Físico">
+              </Tab>
+              <Tab eventKey={5} title={<span>Examen Físico</span>}>
+                {/* <TabPanel header="Examen Físico"> */}
                 <Row>
                   <Col sm="12">
                     <FormGroup>
@@ -366,8 +380,9 @@ class TabChild extends Component {
                     </FormGroup>
                   </Col>
                 </Row>
-              </TabPanel>
-              <TabPanel header="Diagnóstico">
+              </Tab>
+              <Tab eventKey={6} title={<span>Diagnóstico</span>}>
+                {/* <TabPanel header="Diagnóstico"> */}
                 <Row>
                   <Col sm="12">
                     <FormGroup>
@@ -527,8 +542,9 @@ class TabChild extends Component {
                     </FormGroup>
                   </Col>
                 </Row>
-              </TabPanel>
-              <TabPanel header="Tratamiento">
+              </Tab>
+              <Tab eventKey={7} title={<span>Tratamiento</span>}>
+                {/* <TabPanel header="Tratamiento"> */}
                 <Row>
                   <Col sm="12">
                     <FormGroup>
@@ -545,8 +561,9 @@ class TabChild extends Component {
                     </FormGroup>
                   </Col>
                 </Row>
-              </TabPanel>
-              <TabPanel header="Evolución y Prescripción">
+              </Tab>
+              <Tab eventKey={8} title={<span>Evolución y Prescripción</span>}>
+                {/* <TabPanel header="Evolución y Prescripción"> */}
                 <Row>
                   <Col sm="6">
                     <FormGroup>
@@ -577,8 +594,9 @@ class TabChild extends Component {
                     </FormGroup>
                   </Col>
                 </Row>
-              </TabPanel>
-            </TabView>
+              </Tab>
+              {/* </TabView> */}
+            </Tabs>
             <div>
               <Button type="submit" color="primary">
                 Guardar
@@ -592,7 +610,7 @@ class TabChild extends Component {
               </Button>
             </div>
           </div>
-        </Form>
+        </form>
       </div>
     );
   }
