@@ -28,7 +28,7 @@ class Nav extends Component {
             }
             data-toggle="collapse"
           >
-            <i className="pe-7s-map-marker" />
+            <i className="pe-7s-note2" />
             <p>
               Medicina General <b className="caret" />
             </p>
