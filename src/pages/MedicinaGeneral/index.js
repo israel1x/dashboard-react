@@ -1,12 +1,12 @@
 import React from "react";
 import { Route } from "react-router-dom";
 
-import Grid from "./Grid";
+/* import Grid from "./Grid";
 import Icons from "./Icons";
 import Notifications from "./Notifications";
 import Panels from "./Panels";
 import SweetAlert from "./SweetAlert";
-import Typography from "./Typography";
+import Typography from "./Typography"; */
 
 import NuevaConsulta from "./NuevaConsulta";
 

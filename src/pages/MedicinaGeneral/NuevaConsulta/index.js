@@ -7,7 +7,7 @@ import TabFather from "./TabFatherComponent";
 const NuevaConsulta = () => (
   <div>
     <div className="row">
-      <div className="col-md-6">
+      <div className="col-md-12">
         <BuscarDatosPaciente />
       </div>
       {/* <div className="col-md-6">

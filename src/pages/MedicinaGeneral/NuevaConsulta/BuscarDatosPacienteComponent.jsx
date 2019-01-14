@@ -10,7 +10,7 @@ import {
   Card,
   CardBody
 } from "reactstrap";
-import "./buscardatospaciente.scss";
+//import "./buscardatospaciente.scss";
 
 class BuscarDatosPaciente extends Component {
   state = {};

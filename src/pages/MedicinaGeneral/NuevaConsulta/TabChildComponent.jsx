@@ -8,6 +8,8 @@ import { Col, Row, Button, Form, FormGroup, Label, Input } from "reactstrap";
 //import { Control, LocalForm, Errors } from "react-redux-form";
 //import classnames from "classnames";
 
+import { Tabs, Tab } from "react-bootstrap";
+
 const apiEndpoint =
   "http://ec2-34-216-62-59.us-west-2.compute.amazonaws.com:5000/medicalcards/";
 
@@ -67,10 +69,10 @@ class TabChild extends Component {
     console.log(data);
   }
 
-  schema = {
+  /* schema = {
     desPacienteA: Joi.string().required()
   };
-
+ */
   handleInputChange(event) {
     const target = event.target;
     const value = target.value;
@@ -82,7 +84,7 @@ class TabChild extends Component {
   }
 
   validate = () => {
-    const error = Joi.validate(this.state.desPacienteA, this.schema, {
+    /* const error = Joi.validate(this.state.desPacienteA, this.schema, {
       abortEarly: false
     });
     if (!error) return null;
@@ -90,7 +92,7 @@ class TabChild extends Component {
     const errors = {};
     for (let item of error.details) errors[item.path[0]] = item.message;
     return errors;
-
+ */
     /* console.log(result);
 
     const errros = {};

@@ -12,8 +12,47 @@ class Nav extends Component {
         <li className={location.pathname === "/" ? "active" : null}>
           <Link to="/">
             <i className="pe-7s-graph" />
-            <p>Dashboard</p>
+            <p>Pagina Principal</p>
           </Link>
+        </li>
+        <li
+          className={
+            this.isPathActive("/medicinageneral") || this.state.mapMenuOpen
+              ? "active"
+              : null
+          }
+        >
+          <a
+            onClick={() =>
+              this.setState({ mapMenuOpen: !this.state.mapMenuOpen })
+            }
+            data-toggle="collapse"
+          >
+            <i className="pe-7s-map-marker" />
+            <p>
+              Medicina General <b className="caret" />
+            </p>
+          </a>
+          <Collapse in={this.state.mapMenuOpen}>
+            <div>
+              <ul className="nav">
+                <li
+                  className={
+                    this.isPathActive("/maps/google-map") ? "active" : null
+                  }
+                >
+                  <Link to="/medicinageneral/nuevaconsulta">Consultas</Link>
+                </li>
+                <li
+                  className={
+                    this.isPathActive("/maps/vector-map") ? "active" : null
+                  }
+                >
+                  <Link to="/maps/vector-map">Pacientes</Link>
+                </li>
+              </ul>
+            </div>
+          </Collapse>
         </li>
         <li
           className={
@@ -32,7 +71,7 @@ class Nav extends Component {
           >
             <i className="pe-7s-plugin" />
             <p>
-              Components
+              Reportes Médicos
               <b className="caret" />
             </p>
           </a>
@@ -113,7 +152,7 @@ class Nav extends Component {
           >
             <i className="pe-7s-note2" />
             <p>
-              Forms <b className="caret" />
+              Formularios Médicos <b className="caret" />
             </p>
           </a>
           <Collapse in={this.state.formMenuOpen}>
@@ -161,7 +200,7 @@ class Nav extends Component {
           >
             <i className="pe-7s-news-paper" />
             <p>
-              Tables <b className="caret" />
+              Requerimientos <b className="caret" />
             </p>
           </a>
           <Collapse in={this.state.tableMenuOpen}>
@@ -200,45 +239,7 @@ class Nav extends Component {
             </div>
           </Collapse>
         </li>
-        <li
-          className={
-            this.isPathActive("/nuevaconsulta") || this.state.mapMenuOpen
-              ? "active"
-              : null
-          }
-        >
-          <a
-            onClick={() =>
-              this.setState({ mapMenuOpen: !this.state.mapMenuOpen })
-            }
-            data-toggle="collapse"
-          >
-            <i className="pe-7s-map-marker" />
-            <p>
-              Medicina General <b className="caret" />
-            </p>
-          </a>
-          <Collapse in={this.state.mapMenuOpen}>
-            <div>
-              <ul className="nav">
-                <li
-                  className={
-                    this.isPathActive("/maps/google-map") ? "active" : null
-                  }
-                >
-                  <Link to="/maps/google-map">Consultas</Link>
-                </li>
-                <li
-                  className={
-                    this.isPathActive("/maps/vector-map") ? "active" : null
-                  }
-                >
-                  <Link to="/maps/vector-map">Vector Map</Link>
-                </li>
-              </ul>
-            </div>
-          </Collapse>
-        </li>
+
         {/* <li className={this.isPathActive("/charts") ? "active" : null}>
           <Link to="/charts">
             <i className="pe-7s-graph" />

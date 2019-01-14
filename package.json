@@ -39,6 +39,7 @@
     "pe7-icon": "^1.0.4",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.6",
+    "primereact": "^3.0.0-rc.1",
     "promise": "8.0.1",
     "react": "^15.6.1",
     "react-addons-shallow-compare": "^15.6.0",
