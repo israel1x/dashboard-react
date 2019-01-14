@@ -18,6 +18,7 @@ class TabChild extends Component {
     super(props);
     this.state = {
       activeIndex: 0,
+      defaultActiveKey: 0,
       motivoConsulta: "",
       antePersonal: "",
       anteFamiliares: "",
