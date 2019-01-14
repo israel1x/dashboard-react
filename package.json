@@ -6,6 +6,7 @@
   "dependencies": {
     "animate.css": "^3.5.2",
     "autoprefixer": "7.1.2",
+    "axios": "^0.18.0",
     "babel-core": "6.25.0",
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
@@ -54,6 +55,7 @@
     "react-notification-system": "^0.2.15",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
+    "reactstrap": "^7.0.2",
     "redux": "^3.7.2",
     "redux-form": "^7.0.4",
     "redux-logger": "^3.0.6",

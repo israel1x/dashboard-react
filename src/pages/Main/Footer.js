@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
 const Footer = () => (
   <footer className="footer">
     <div className="container-fluid">
       <nav className="pull-left">
-        <ul>
+        {/* <ul>
           <li>
             <a href="#">
               Home
@@ -25,11 +25,12 @@ const Footer = () => (
               Blog
                   </a>
           </li>
-        </ul>
+        </ul> */}
       </nav>
-      <p className="copyright pull-right">
-        © 2017 <a href="http://jslancer.com">JSLancer</a>, made with love for a better web
-      </p>
+      {/* <p className="copyright pull-right">
+        © 2017 <a href="http://jslancer.com">JSLancer</a>, made with love for a
+        better web
+      </p> */}
     </div>
   </footer>
 );
