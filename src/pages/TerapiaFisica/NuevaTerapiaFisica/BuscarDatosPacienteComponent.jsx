@@ -10,6 +10,8 @@ import {
   Card,
   CardBody
 } from "reactstrap";
+//import "./buscardatospaciente.scss";
+
 const formStyles = {
   margin: "15px"
 };
@@ -22,6 +24,7 @@ const btnStyle = {
   float: "right"
   ///margin-right: 20px;
 };
+
 class BuscarDatosPaciente extends Component {
   state = {};
   render() {
@@ -30,7 +33,7 @@ class BuscarDatosPaciente extends Component {
         <div>Datos Paciente</div>
         <Card className="card-contenedor" body outline color="info">
           <CardBody>
-            <Form style={formStyles}>
+            <form style={formStyles}>
               <Row className="form-group">
                 <Col md={2}>
                   <FormGroup>
@@ -119,7 +122,7 @@ class BuscarDatosPaciente extends Component {
                   </Button>
                 </div>
               </Row>
-            </Form>
+            </form>
           </CardBody>
         </Card>
       </div>

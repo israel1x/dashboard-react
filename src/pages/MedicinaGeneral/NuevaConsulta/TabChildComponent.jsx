@@ -5,8 +5,8 @@ import MyInput from "./Myinput";
 //import { Link } from "react-router-dom";
 import { TabView, TabPanel } from "primereact/tabview";
 import { Col, Row, Button, Form, FormGroup, Label, Input } from "reactstrap";
-//import { Control, LocalForm, Errors } from "react-redux-form";
-//import classnames from "classnames";
+import { Field, reduxForm } from "redux-form";
+import renderField from "components/FormInputs/renderField";
 
 import { Tabs, Tab } from "react-bootstrap";
 
@@ -389,156 +389,117 @@ class TabChild extends Component {
                     <FormGroup>
                       <Label for="diagnostiPac">8. Diagnóstico</Label>
                       <Row>
-                        <Col sm="1">
-                          <br />
-                          <label>1</label>
-                        </Col>
-                        <Col sm="4">
+                        <div className="col-sm-9">
                           <Label for="desPacienteA">Descripción</Label>
-                          <Input
-                            type="text"
-                            name="desPacienteA"
-                            id="desPacienteA"
-                            rows="3"
-                            value={this.state.desPacienteA}
-                            onChange={this.handleInputChange}
-                            placeholder=""
-                          />
-                        </Col>
-                        <Col sm="3">
+                        </div>
+                        <div className="col-sm-1">
                           <Label for="ciePacienteA">CIE</Label>
-                          <Input
-                            type="text"
-                            name="ciePacienteA"
-                            id="ciePacienteA"
-                            rows="3"
-                            value={this.state.ciePacienteA}
-                            onChange={this.handleInputChange}
-                            placeholder=""
-                          />
-                        </Col>
-                        <Col sm="2">
+                        </div>
+                        <div className="col-sm-1">
                           <Label for="prePacienteA">PRE</Label>
-                          <Input
-                            type="text"
-                            name="prePacienteA"
-                            id="prePacienteA"
-                            rows="3"
-                            value={this.state.prePacienteA}
-                            onChange={this.handleInputChange}
-                            placeholder=""
-                          />
-                        </Col>
-                        <Col sm="2">
+                        </div>
+                        <div className="col-sm-1">
                           <Label for="defPacienteA">DEF</Label>
+                        </div>
+                      </Row>
+                      <Row>
+                        <div className="col-sm-1">
+                          <label>1</label>
+                        </div>
+                        <div className="col-sm-8">
                           <Input
                             type="text"
-                            name="defPacienteA"
-                            id="defPacienteA"
+                            name="desPaciente1"
+                            id="desPaciente1"
                             rows="3"
-                            value={this.state.defPacienteA}
+                            value={this.state.desPaciente1}
                             onChange={this.handleInputChange}
                             placeholder=""
                           />
-                        </Col>
+                        </div>
+                        <div className="col-sm-1">
+                          <div>
+                            <label>
+                              <Input type="checkbox" name="SI" />
+                            </label>
+                          </div>
+                        </div>
+                        <div className="col-sm-1">
+                          <label>
+                            <Input type="checkbox" name="SI" />
+                          </label>
+                        </div>
+                        <div className="col-sm-1">
+                          <label>
+                            <Input type="checkbox" name="SI" />
+                          </label>
+                        </div>
                       </Row>
                       <Row>
-                        <Col sm="1">
+                        <div className="col-sm-1">
                           <label>2</label>
-                        </Col>
-                        <Col sm="4">
+                        </div>
+                        <div className="col-sm-8">
                           <Input
                             type="text"
-                            name="desPacienteB"
-                            id="desPacienteB"
+                            name="desPaciente2"
+                            id="desPaciente2"
                             rows="3"
-                            value={this.state.desPacienteB}
+                            value={this.state.desPaciente2}
                             onChange={this.handleInputChange}
                             placeholder=""
                           />
-                        </Col>
-                        <Col sm="3">
-                          <Input
-                            type="text"
-                            name="ciePacienteB"
-                            id="ciePacienteB"
-                            rows="3"
-                            value={this.state.ciePacienteB}
-                            onChange={this.handleInputChange}
-                            placeholder=""
-                          />
-                        </Col>
-                        <Col sm="2">
-                          <Input
-                            type="text"
-                            name="prePacienteB"
-                            id="prePacienteB"
-                            rows="3"
-                            value={this.state.prePacienteB}
-                            onChange={this.handleInputChange}
-                            placeholder=""
-                          />
-                        </Col>
-                        <Col sm="2">
-                          <Input
-                            type="text"
-                            name="defPacienteB"
-                            id="defPacienteB"
-                            rows="3"
-                            value={this.state.defPacienteB}
-                            onChange={this.handleInputChange}
-                            placeholder=""
-                          />
-                        </Col>
+                        </div>
+                        <div className="col-sm-1">
+                          <div>
+                            <label>
+                              <Input type="checkbox" name="SI" />
+                            </label>
+                          </div>
+                        </div>
+                        <div className="col-sm-1">
+                          <label>
+                            <Input type="checkbox" name="SI" />
+                          </label>
+                        </div>
+                        <div className="col-sm-1">
+                          <label>
+                            <Input type="checkbox" name="SI" />
+                          </label>
+                        </div>
                       </Row>
                       <Row>
-                        <Col sm="1">
+                        <div className="col-sm-1">
                           <label>3</label>
-                        </Col>
-                        <Col sm="4">
+                        </div>
+                        <div className="col-sm-8">
                           <Input
                             type="text"
-                            name="desPacienteC"
-                            id="desPacienteC"
+                            name="desPaciente3"
+                            id="desPaciente3"
                             rows="3"
-                            value={this.state.desPacienteC}
+                            value={this.state.desPaciente3}
                             onChange={this.handleInputChange}
                             placeholder=""
                           />
-                        </Col>
-                        <Col sm="3">
-                          <Input
-                            type="text"
-                            name="ciePacienteC"
-                            id="ciePacienteC"
-                            rows="3"
-                            value={this.state.ciePacienteC}
-                            onChange={this.handleInputChange}
-                            placeholder=""
-                          />
-                        </Col>
-                        <Col sm="2">
-                          <Input
-                            type="text"
-                            name="prePacienteC"
-                            id="prePacienteC"
-                            rows="3"
-                            value={this.state.prePacienteC}
-                            onChange={this.handleInputChange}
-                            placeholder=""
-                          />
-                        </Col>
-                        <Col sm="2">
-                          <Input
-                            type="text"
-                            name="defPacienteC"
-                            id="defPacienteC"
-                            rows="3"
-                            value={this.state.defPacienteC}
-                            onChange={this.handleInputChange}
-                            placeholder=""
-                          />
-                        </Col>
+                        </div>
+                        <div className="col-sm-1">
+                          <div>
+                            <label>
+                              <Input type="checkbox" name="SI" />
+                            </label>
+                          </div>
+                        </div>
+                        <div className="col-sm-1">
+                          <label>
+                            <Input type="checkbox" name="SI" />
+                          </label>
+                        </div>
+                        <div className="col-sm-1">
+                          <label>
+                            <Input type="checkbox" name="SI" />
+                          </label>
+                        </div>
                       </Row>
                     </FormGroup>
                   </Col>
@@ -599,15 +560,18 @@ class TabChild extends Component {
               {/* </TabView> */}
             </Tabs>
             <div>
-              <Button type="submit" color="primary">
+              <Button type="submit" className="btn btn-info btn-fill btn-wd">
                 Guardar
               </Button>
               <Button
                 onClick={this.handleButtonNext}
-                color="link"
+                className="btn btn-default btn-fill btn-wd"
                 is-outlined="true"
               >
-                Siguiente
+                Siguiente{" "}
+                <span className="btn-label btn-label-right">
+                  <i className="fa fa-arrow-right" />
+                </span>
               </Button>
             </div>
           </div>

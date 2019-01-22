@@ -71,13 +71,24 @@ class Nav extends Component {
           >
             <i className="pe-7s-plugin" />
             <p>
-              Reportes Médicos
+              Tearapia Física
               <b className="caret" />
             </p>
           </a>
           <Collapse in={this.state.componentMenuOpen}>
             <div>
               <ul className="nav">
+                <li
+                  className={
+                    this.isPathActive("/terapiafisica/nuevaterapiafisica")
+                      ? "active"
+                      : null
+                  }
+                >
+                  <Link to="/terapiafisica/nuevaterapiafisica">
+                    Nueva Terapia
+                  </Link>
+                </li>
                 <li
                   className={
                     this.isPathActive("/components/buttons") ? "active" : null

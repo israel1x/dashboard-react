@@ -22,6 +22,7 @@ import Charts from "../Charts";
 import Calendar from "../Calendar";
 import Tables from "../Tables";
 import MedicinaGeneral from "../MedicinaGeneral";
+import TerapiaFisica from "../TerapiaFisica";
 
 const Main = ({ mobileNavVisibility, hideMobileMenu, history }) => {
   history.listen(() => {
@@ -46,10 +47,9 @@ const Main = ({ mobileNavVisibility, hideMobileMenu, history }) => {
           <Route path="/profile" component={UserProfile} />
           <Route path="/forms" component={Forms} />
           <Route path="/tables" component={Tables} />
-          {/* <Route path="/maps" component={MapsPage} />
-          <Route path="/charts" component={Charts} /> */}
           <Route path="/calendar" component={Calendar} />
           <Route path="/medicinageneral" component={MedicinaGeneral} />
+          <Route path="/terapiafisica" component={TerapiaFisica} />
           <Footer />
         </div>
       </div>
