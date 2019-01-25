@@ -10,6 +10,7 @@ import {
   Card,
   CardBody
 } from "reactstrap";
+import { SplitButton, DropdownButton, MenuItem } from "react-bootstrap";
 //import "./buscardatospaciente.scss";
 
 const formStyles = {
@@ -107,11 +108,20 @@ class BuscarDatosPaciente extends Component {
               <Row className="form-group row-buscar" style={divCont}>
                 <div className="col-sm-6">
                   <Label for="selecthistorial">Historial:</Label>
-                  <Input
+                  {/*  <Input
                     type="select"
                     name="emailhistorial"
                     id="selecthistorial"
-                  />
+                  /> */}
+                  <DropdownButton
+                    bsSize="large"
+                    title="Historial"
+                    id="dropdown-size-medium"
+                  >
+                    <MenuItem eventKey="1">Lunes, </MenuItem>
+                    <MenuItem eventKey="2">Martes, </MenuItem>
+                    <MenuItem eventKey="3">Miercoles, </MenuItem>
+                  </DropdownButton>
                 </div>
                 <div className="col-sm-6">
                   <Button

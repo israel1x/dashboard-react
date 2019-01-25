@@ -48,9 +48,9 @@ const Main = ({ mobileNavVisibility, hideMobileMenu, history }) => {
           <Route exact path="/" component={Dashboard} />
           <Route path="/components" component={Components} />
           <Route path="/profile" component={UserProfile} />
-          <Route path="/forms" component={Forms} />
+          {/*  <Route path="/forms" component={Forms} />
           <Route path="/tables" component={Tables} />
-          <Route path="/calendar" component={Calendar} />
+          <Route path="/calendar" component={Calendar} /> */}
           <Route path="/medicinageneral" component={MedicinaGeneral} />
           <Route path="/terapiafisica" component={TerapiaFisica} />
           <Route path="/odontologia" component={Odontologia} />

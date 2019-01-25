@@ -307,7 +307,7 @@ class TabChild extends Component {
                           </div>
                           <div>
                             <label>
-                              <Input type="checkbox" name="SI" /> hepatitis
+                              <Input type="checkbox" name="SI" /> Hepatitis
                             </label>
                           </div>
                           <div>
@@ -592,6 +592,16 @@ class TabChild extends Component {
                           <Input type="checkbox" name="SI" /> Magnetoterapia
                         </label>
                       </div>
+                      <div>
+                        <label>
+                          <Input type="checkbox" name="SI" /> Ondas de Choque
+                        </label>
+                      </div>
+                      <div>
+                        <label>
+                          <Input type="checkbox" name="SI" /> Parafina
+                        </label>
+                      </div>
                     </div>
                     <div className="col-sm-3 checkbox-group">
                       <div>
@@ -603,6 +613,11 @@ class TabChild extends Component {
                       <div>
                         <label>
                           <Input type="checkbox" name="SI" /> Laser
+                        </label>
+                      </div>
+                      <div>
+                        <label>
+                          <Input type="checkbox" name="SI" /> Nebulización
                         </label>
                       </div>
                     </div>

@@ -10,7 +10,7 @@ class Nav extends Component {
     return (
       <ul className="nav">
         <li className={location.pathname === "/" ? "active" : null}>
-          <Link to="/">
+          <Link to="/medicinagenera/nuevaconsulta">
             <i className="pe-7s-graph" />
             <p>Pagina Principal</p>
           </Link>
@@ -89,61 +89,6 @@ class Nav extends Component {
                     Nueva Terapia
                   </Link>
                 </li>
-                <li
-                  className={
-                    this.isPathActive("/components/buttons") ? "active" : null
-                  }
-                >
-                  <Link to="/components/buttons">Buttons</Link>
-                </li>
-                <li
-                  className={
-                    this.isPathActive("/components/grid") ? "active" : null
-                  }
-                >
-                  <Link to="/components/grid">Grid System</Link>
-                </li>
-                <li
-                  className={
-                    this.isPathActive("/components/icons") ? "active" : null
-                  }
-                >
-                  <Link to="/components/icons">Icons</Link>
-                </li>
-                <li
-                  className={
-                    this.isPathActive("/components/notifications")
-                      ? "active"
-                      : null
-                  }
-                >
-                  <Link to="/components/notifications">Notifications</Link>
-                </li>
-                <li
-                  className={
-                    this.isPathActive("/components/panels") ? "active" : null
-                  }
-                >
-                  <Link to="/components/panels">Panels</Link>
-                </li>
-                <li
-                  className={
-                    this.isPathActive("/components/sweetalert")
-                      ? "active"
-                      : null
-                  }
-                >
-                  <Link to="/components/sweetalert">Sweet Alert</Link>
-                </li>
-                <li
-                  className={
-                    this.isPathActive("/components/typography")
-                      ? "active"
-                      : null
-                  }
-                >
-                  <Link to="/components/typography">Typography</Link>
-                </li>
               </ul>
             </div>
           </Collapse>
@@ -171,102 +116,17 @@ class Nav extends Component {
               <ul className="nav">
                 <li
                   className={
-                    this.isPathActive("/odontologia/consultaodontologica")
-                      ? "active"
-                      : null
+                    this.isPathActive("/odontologia") ? "active" : null
                   }
                 >
                   <Link to="/odontologia/consultaodontologica">
                     Consulta Odontologíca
                   </Link>
                 </li>
-                <li
-                  className={
-                    this.isPathActive("/forms/extended-forms") ? "active" : null
-                  }
-                >
-                  <Link to="/forms/extended-forms">Extended Forms</Link>
-                </li>
-                <li
-                  className={
-                    this.isPathActive("/forms/validation-forms")
-                      ? "active"
-                      : null
-                  }
-                >
-                  <Link to="/forms/validation-forms">Validation Forms</Link>
-                </li>
               </ul>
             </div>
           </Collapse>
         </li>
-        <li
-          className={
-            this.isPathActive("/tables") || this.state.tableMenuOpen
-              ? "active"
-              : null
-          }
-        >
-          <a
-            onClick={() =>
-              this.setState({ tableMenuOpen: !this.state.tableMenuOpen })
-            }
-            data-toggle="collapse"
-          >
-            <i className="pe-7s-news-paper" />
-            <p>
-              Requerimientos <b className="caret" />
-            </p>
-          </a>
-          <Collapse in={this.state.tableMenuOpen}>
-            <div>
-              <ul className="nav">
-                <li
-                  className={
-                    this.isPathActive("/tables/regular-tables")
-                      ? "active"
-                      : null
-                  }
-                >
-                  <Link to="/tables/regular-tables">Regular Table</Link>
-                </li>
-                <li
-                  className={
-                    this.isPathActive("/tables/extended-tables")
-                      ? "active"
-                      : null
-                  }
-                >
-                  <Link to="/tables/extended-tables">Extended Tables</Link>
-                </li>
-                <li
-                  className={
-                    this.isPathActive("/tables/fixed-data-table")
-                      ? "active"
-                      : null
-                  }
-                >
-                  <Link to="/tables/react-bootstrap-table">
-                    React Bootstrap Table
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </Collapse>
-        </li>
-
-        {/* <li className={this.isPathActive("/odontologia") ? "active" : null}>
-          <Link to="/odontologia">
-            <i className="pe-7s-graph" />
-            <p>Odontología</p>
-          </Link>
-        </li>
-        <li className={this.isPathActive("/calendar") ? "active" : null}>
-          <Link to="/calendar">
-            <i className="pe-7s-date" />
-            <p>Calendar</p>
-          </Link>
-        </li>  */}
       </ul>
     );
   }
