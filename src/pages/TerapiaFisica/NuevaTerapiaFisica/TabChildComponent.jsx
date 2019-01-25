@@ -42,6 +42,34 @@ class TabChild extends Component {
       trataPac: "",
       evoluPac: "",
       prescripPac: "",
+
+      // TFisicaMedicalcards Variables
+      antecedentes: {
+        personales: {
+          hipertensionArterial: true,
+          diabetes: false,
+          colesterolAlto: false,
+          osteoartritis: false,
+          acv: false,
+          infarto: false,
+          arritmias: false,
+          cancer: false,
+          epatitis: false,
+          tuberculosis: false,
+          transfuciones: false,
+          accidentes: false,
+          otros: false,
+        },
+        familiares: {
+          hipertensionArterial: false,
+          diabetes: false,
+          infartoDelMiocardio: false,
+          demencia: false,
+          cancer: false,
+          otros: false,
+        },
+        descripAntYOtros: "String",
+      },
       // diagnosticoPac: ""
 
       /*  errors: {
@@ -236,8 +264,7 @@ class TabChild extends Component {
                         <div className="col-sm-3 col-sm-offset-1 checkbox-group">
                           <div>
                             <label>
-                              <Input type="checkbox" name="SI" /> Hipertension
-                              Arterial
+                              <Input type="checkbox" name="hipertensionArterial" value={this.state.antecedentes.personales.hipertensionArterial} /> Hipertension Arterial
                             </label>
                           </div>
                           <div>
@@ -463,7 +490,7 @@ class TabChild extends Component {
                       </label>
                       <div className="col-md-5">
                         <Input
-                          type="text"
+                          type="number"
                           name="escalaIntensidad"
                           id="escalaIntensidad"
                           value={this.state.escalaIntensidad} //ppppppp
