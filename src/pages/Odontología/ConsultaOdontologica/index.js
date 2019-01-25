@@ -2,7 +2,7 @@ import React from "react";
 import BuscarDatosPaciente from "./BuscarDatosPacienteComponent";
 import TabFather from "./TabFatherComponent";
 
-const ConsultaOdontologica = () => {
+const ConsultaOdontologica = () => (
   <div>
     <div className="row">
       <div className="col-md-12">
@@ -14,7 +14,7 @@ const ConsultaOdontologica = () => {
         <TabFather />
       </div>
     </div>
-  </div>;
-};
+  </div>
+);
 
 export default ConsultaOdontologica;
