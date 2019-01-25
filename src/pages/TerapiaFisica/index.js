@@ -1,6 +1,5 @@
 import React from "react";
 import { Route } from "react-router-dom";
-
 import NuevaTerapiaFisica from "./NuevaTerapiaFisica";
 
 const TerapiaFisica = ({ match }) => (

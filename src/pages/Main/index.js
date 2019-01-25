@@ -23,6 +23,9 @@ import Calendar from "../Calendar";
 import Tables from "../Tables";
 import MedicinaGeneral from "../MedicinaGeneral";
 import TerapiaFisica from "../TerapiaFisica";
+import Odontologia from "../Odontología";
+import Psicologia from "../Psicología";
+import TerapiaLenguaje from "../TerapiaLenguaje";
 
 const Main = ({ mobileNavVisibility, hideMobileMenu, history }) => {
   history.listen(() => {
@@ -50,6 +53,9 @@ const Main = ({ mobileNavVisibility, hideMobileMenu, history }) => {
           <Route path="/calendar" component={Calendar} />
           <Route path="/medicinageneral" component={MedicinaGeneral} />
           <Route path="/terapiafisica" component={TerapiaFisica} />
+          <Route path="/odontologia" component={Odontologia} />
+          <Route path="/psicologia" component={Psicologia} />
+          <Route path="/terapialenguaje" component={TerapiaLenguaje} />
           <Footer />
         </div>
       </div>

@@ -150,7 +150,7 @@ class Nav extends Component {
         </li>
         <li
           className={
-            this.isPathActive("/forms") || this.state.formMenuOpen
+            this.isPathActive("/components") || this.state.formMenuOpen
               ? "active"
               : null
           }
@@ -163,7 +163,7 @@ class Nav extends Component {
           >
             <i className="pe-7s-note2" />
             <p>
-              Formularios Médicos <b className="caret" />
+              Odontología <b className="caret" />
             </p>
           </a>
           <Collapse in={this.state.formMenuOpen}>
@@ -171,10 +171,14 @@ class Nav extends Component {
               <ul className="nav">
                 <li
                   className={
-                    this.isPathActive("/forms/regular-forms") ? "active" : null
+                    this.isPathActive("/odontologia/consultaodontologica")
+                      ? "active"
+                      : null
                   }
                 >
-                  <Link to="/forms/regular-forms">Regular Forms</Link>
+                  <Link to="/odontologia/consultaodontologica">
+                    Consulta Odontologíca
+                  </Link>
                 </li>
                 <li
                   className={
@@ -251,10 +255,10 @@ class Nav extends Component {
           </Collapse>
         </li>
 
-        {/* <li className={this.isPathActive("/charts") ? "active" : null}>
-          <Link to="/charts">
+        {/* <li className={this.isPathActive("/odontologia") ? "active" : null}>
+          <Link to="/odontologia">
             <i className="pe-7s-graph" />
-            <p>Charts</p>
+            <p>Odontología</p>
           </Link>
         </li>
         <li className={this.isPathActive("/calendar") ? "active" : null}>
@@ -262,7 +266,7 @@ class Nav extends Component {
             <i className="pe-7s-date" />
             <p>Calendar</p>
           </Link>
-        </li> */}
+        </li>  */}
       </ul>
     );
   }
