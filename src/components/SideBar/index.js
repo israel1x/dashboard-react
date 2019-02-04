@@ -1,11 +1,9 @@
-import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import { Collapse } from "react-bootstrap";
-import UserInfo from "./UserInfo";
-import Nav from "./Nav";
-import backgroundImage from "assets/images/sidebar-5.jpg";
 import logoServiciosMedicos from "assets/images/front/logoserviciosmedicos.png";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import Nav from "./Nav";
+import UserInfo from "./UserInfo";
 
 class SideBar extends Component {
   state = {};

@@ -1,24 +1,20 @@
-import React, { Component } from "react";
 import axios from "axios";
-import MyInput from "./Myinput";
-import { TabView, TabPanel } from "primereact/tabview";
-import { Col, Row, Button, Form, FormGroup, Label, Input } from "reactstrap";
-import { Field, reduxForm } from "redux-form";
-import renderField from "components/FormInputs/renderField";
-
-import { Tabs, Tab, ControlLabel, Checkbox } from "react-bootstrap";
-import { SingleDatePicker, DateRangePicker } from "react-dates";
 import moment from "moment";
+import React, { Component } from "react";
+import { Tab, Tabs } from "react-bootstrap";
+import { SingleDatePicker } from "react-dates";
+import { Button, Col, FormGroup, Input, Label, Row } from "reactstrap";
+import MyAutoCompleteField from "./MyAutoCompleteField";
 
 const apiEndpoint =
   "http://ec2-34-216-62-59.us-west-2.compute.amazonaws.com:5000/medicalcards/";
-
+const endPointCodeCie =
+  "http://ec2-34-216-62-59.us-west-2.compute.amazonaws.com:5000/cies/";
 class TabChild extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeIndex: 0,
-      defaultActiveKey: 0,
+      hipertension: false,
       motivoConsulta: "",
       antePersonal: "",
       anteFamiliares: "",
@@ -43,10 +39,9 @@ class TabChild extends Component {
       evoluPac: "",
       prescripPac: "",
 
-      // TFisicaMedicalcards Variables
       antecedentes: {
         personales: {
-          hipertensionArterial: true,
+          hipertensionArterial: false,
           diabetes: false,
           colesterolAlto: false,
           osteoartritis: false,
@@ -58,7 +53,7 @@ class TabChild extends Component {
           tuberculosis: false,
           transfuciones: false,
           accidentes: false,
-          otros: false,
+          otros: false
         },
         familiares: {
           hipertensionArterial: false,
@@ -66,33 +61,41 @@ class TabChild extends Component {
           infartoDelMiocardio: false,
           demencia: false,
           cancer: false,
-          otros: false,
+          otros: false
         },
-        descripAntYOtros: "String",
+        descripAntYOtros: "String"
       },
-      // diagnosticoPac: ""
-
-      /*  errors: {
-        desPacienteA: "No a ingresado el diagnóstico del paciente"
-      } */
 
       date: moment(),
       startDate: moment(),
       endDate: moment(),
-      dateRangeFocusedInput: null
+      dateRangeFocusedInput: null,
+
+      //VARIABLES PARA LAS TABS
+      activeTab: 1,
+
+      //VARIABLES DEL AUTOCOMPLETE
+      descrip: "",
+      dataCodes: [],
+      dataCodes2: [
+        { code: "A00", descrip: "Colera" },
+        { code: "A00", descrip: "Colera con tA" },
+        { code: "A00", descrip: "Colera con C" },
+        { code: "A00", descrip: "Colera con b" }
+      ]
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    //this.handleChecked = this.handleChecked.bind(this);
+
+    this.MyOnChangeAutoComplete = this.MyOnChangeAutoComplete.bind(this);
   }
 
-  async componentDidMount() {
-    /*  const response = await axios.get(
-      "http://ec2-34-216-62-59.us-west-2.compute.amazonaws.com:5000/medicalcards/"
-    ); */
-    // p const { data: registro } = await axios.get(apiEndpoint);
-    //const response = await promise;
-    //console.log(promise);
-    // p console.log(registro);
+  componentDidMount() {
+    axios.get(endPointCodeCie).then(response => {
+      this.setState({ dataCodes: response.data });
+      console.log(response.data);
+    });
   }
 
   async sendFormMedicinaGeneral(obj) {
@@ -109,7 +112,7 @@ class TabChild extends Component {
  */
   handleInputChange(event) {
     const target = event.target;
-    const value = target.value;
+    const value = target.type === "checkbox" ? target.checked : target.value;
     const name = target.name;
 
     this.setState({
@@ -117,25 +120,17 @@ class TabChild extends Component {
     });
   }
 
-  validate = () => {
-    /* const error = Joi.validate(this.state.desPacienteA, this.schema, {
-      abortEarly: false
+  /* handleChecked(event) {
+    const target = event.target;
+    const status = target.checked;
+    const name = target.name;
+
+    this.setState({
+      [name]: status
     });
-    if (!error) return null;
+  } */
 
-    const errors = {};
-    for (let item of error.details) errors[item.path[0]] = item.message;
-    return errors;
- */
-    /* console.log(result);
-
-    const errros = {};
-    if (this.state.desPacienteA.trim() === "") {
-      errros.desPacienteA =
-        "Es necesario ingresar el diagnóstico del paciente A";
-    }
-    return Object.keys(errros).length === 0 ? null : errros; */
-  };
+  validate = () => {};
 
   buildJsonDataToSend = dataJson => {
     /* var dataMask =
@@ -219,19 +214,28 @@ class TabChild extends Component {
     this.setState({ errors: errors || {} }); */
 
     let dataJson = JSON.parse(JSON.stringify(this.state));
-    //console.log(dataJson);
+    console.log(dataJson);
 
-    var datax = this.buildJsonDataToSend(dataJson);
-    this.sendFormMedicinaGeneral(datax);
+    // var datax = this.buildJsonDataToSend(dataJson);
+    // this.sendFormMedicinaGeneral(datax);
   }
 
-  handleButtonNext = event => {
-    let currentTab = this.state.activeIndex;
+  handleButtonNextTab = event => {
+    let currentTab = this.state.activeTab;
     if (currentTab === 7) {
-      this.setState({ activeIndex: currentTab });
+      this.setState({ activeTab: currentTab });
     } else {
-      this.setState({ activeIndex: currentTab + 1 });
+      this.setState({ activeTab: currentTab + 1 });
     }
+  };
+
+  MyOnChangeAutoComplete = (selectedEnfermedad, stateAndHelpers) => {
+    const element = document.querySelector(`#${stateAndHelpers.id}-input`);
+    //console.log(element.name);
+    //console.log(`${selectedEnfermedad.descrip}`);
+    this.setState({
+      [element.name]: selectedEnfermedad.code + " " + selectedEnfermedad.descrip
+    });
   };
 
   render() {
@@ -244,18 +248,18 @@ class TabChild extends Component {
         <form onSubmit={this.handleSubmit}>
           <div className="content-section implementation">
             <Tabs
-              defaultActiveKey={1}
               id="tab-with-icons"
-              activeIndex={this.state.activeIndex}
-              onTabChange={e => this.setState({ activeIndex: e.index })}
+              activeKey={this.state.activeTab}
+              onSelect={activeTab => this.setState({ activeTab })}
+              // onTabChange={e => this.setState({ activeIndex: e.index })}
             >
               <Tab eventKey={1} title={<span>Antecedentes</span>}>
-                <Row form="true">
+                <Row>
                   <Col sm="12">
                     <FormGroup>
                       <fieldset>
                         <label
-                          for="antePersonal"
+                          htmlFor="antePersonal"
                           className="col-sm-2 control-label"
                         >
                           Antecedentes Personales:
@@ -264,12 +268,24 @@ class TabChild extends Component {
                         <div className="col-sm-3 col-sm-offset-1 checkbox-group">
                           <div>
                             <label>
-                              <Input type="checkbox" name="hipertensionArterial" value={this.state.antecedentes.personales.hipertensionArterial} /> Hipertension Arterial
+                              <Input
+                                type="checkbox"
+                                name="hipertension"
+                                value={this.state.hipertension}
+                                onChange={this.handleInputChange}
+                              />{" "}
+                              Hipertension Arterial
                             </label>
                           </div>
                           <div>
                             <label>
-                              <Input type="checkbox" name="SI" /> Diabetes
+                              <Input
+                                type="checkbox"
+                                name="diabestes"
+                                value={this.state.diabetes}
+                                onChange={this.handleInputChange}
+                              />{" "}
+                              Diabetes
                             </label>
                           </div>
                           <div>
@@ -431,23 +447,34 @@ class TabChild extends Component {
                     </FormGroup>
                   </Col>
                 </Row>
-                <Row>
-                  <FormGroup>
-                    <ControlLabel>
-                      Reaciones adversas a medicamentos:
-                    </ControlLabel>
-                    <label>
-                      {" "}
-                      SI(
-                      <Input type="checkbox" name="SI" />)
+                <div className="content">
+                  <div className="form-group">
+                    <label className="control-label">
+                      Reaciones adversas a medicamentos:{" "}
                     </label>
-                    <ControlLabel>
+                    <label className="control-label">
                       {" "}
-                      NO(
-                      <Input type="checkbox" name="NO" />)
-                    </ControlLabel>
-                  </FormGroup>
-                </Row>
+                      SI ( <Input type="checkbox" name="SI" /> )
+                    </label>
+                    <label className="control-label">
+                      {" "}
+                      NO ( <Input type="checkbox" name="NO" /> )
+                    </label>
+                  </div>
+                  <div className="form-group">
+                    <label className="control-label">Otros:</label>
+                    <div className="">
+                      <Input
+                        type="text"
+                        name="otrosMedicamentos"
+                        id="otrosMedicamentos"
+                        value={this.state.otrosMedicamnetos} //ppppppp
+                        onChange={this.handleInputChange}
+                        placeholder="Otros medicamentos"
+                      />
+                    </div>
+                  </div>
+                </div>
               </Tab>
               <Tab eventKey={3} title={<span>H. Problema Funcional</span>}>
                 <Row>
@@ -469,7 +496,7 @@ class TabChild extends Component {
               </Tab>
               <Tab eventKey={4} title={<span>Anamnesis del Dolor</span>}>
                 <div className="content">
-                  <form className="form-horizontal">
+                  <div className="form-horizontal">
                     <div className="form-group">
                       <label className="control-label col-md-2">Duración</label>
                       <div className="col-md-5">
@@ -536,46 +563,58 @@ class TabChild extends Component {
                       </label>
                       <div className="col-md-5">
                         <Input
-                          type="text"
+                          type="textarea"
                           name="anEvolucion"
                           id="anEvolucion"
+                          rows="3"
                           value={this.state.anEvolucion} //ppppppp
                           onChange={this.handleInputChange}
                           placeholder="Ingrese la evolución"
                         />
                       </div>
                     </div>
-                  </form>
+                  </div>
                 </div>
               </Tab>
               <Tab eventKey={5} title={<span>Exploración Física</span>}>
-                <Row>
-                  <Col sm="12">
-                    <FormGroup>
-                      <Label for="datosADolor">Observaciones:</Label>
-                      <Input
-                        type="textarea"
-                        name="exfisicoRegA"
-                        id="exfisicoRegA"
-                        rows="2"
-                        value={this.state.exfisicoRegA}
-                        onChange={this.handleInputChange}
-                        placeholder="Ingrese los antecedentes aquí"
-                      />
-                      <br />
-                      <Label for="datosADolor">Impresión Diagnostica:</Label>
-                      <Input
-                        type="textarea"
-                        name="exfisicoRegB"
-                        id="exfisicoRegB"
-                        rows="3"
-                        value={this.state.exfisicoRegB}
-                        onChange={this.handleInputChange}
-                        placeholder="Ingrese los antecedentes familiares aquí"
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
+                <div className="content">
+                  <div className="form-group">
+                    <Label for="datosADolor">Observaciones:</Label>
+                    <Input
+                      type="textarea"
+                      name="exfisicoRegA"
+                      id="exfisicoRegA"
+                      rows="2"
+                      value={this.state.exfisicoRegA}
+                      onChange={this.handleInputChange}
+                      placeholder="Ingrese los antecedentes aquí"
+                    />
+                  </div>
+
+                  <div className="form-froup">
+                    <Label for="datosADolor">Impresión Diagnostica:</Label>
+                    <Input
+                      type="textarea"
+                      name="exfisicoRegB"
+                      id="exfisicoRegB"
+                      rows="3"
+                      value={this.state.exfisicoRegB}
+                      onChange={this.handleInputChange}
+                      placeholder="Ingrese los antecedentes familiares aquí"
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <MyAutoCompleteField
+                      items={this.state.dataCodes}
+                      onChange={this.MyOnChangeAutoComplete}
+                      id="descrip"
+                      label="Código CIE10:"
+                      name="descrip"
+                      placeholder="Enfermedad"
+                    />
+                  </div>
+                </div>
               </Tab>
               <Tab eventKey={6} title={<span>Tratamiento</span>}>
                 <div>
@@ -747,8 +786,7 @@ class TabChild extends Component {
               </Button>
               <Button
                 className="btn btn-default btn-fill btn-wd"
-                is-outlined="true"
-                onClick={this.handleButtonNext}
+                onClick={this.handleButtonNextTab}
               >
                 Siguiente{" "}
                 <span className="btn-label btn-label-right">

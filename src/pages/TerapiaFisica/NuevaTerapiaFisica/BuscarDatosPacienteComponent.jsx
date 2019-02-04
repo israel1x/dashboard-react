@@ -1,17 +1,15 @@
 import React, { Component } from "react";
+import { DropdownButton, MenuItem } from "react-bootstrap";
 import {
-  Col,
-  Row,
   Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
   Card,
-  CardBody
+  CardBody,
+  Col,
+  FormGroup,
+  Input,
+  Label,
+  Row
 } from "reactstrap";
-import { SplitButton, DropdownButton, MenuItem } from "react-bootstrap";
-//import "./buscardatospaciente.scss";
 
 const formStyles = {
   margin: "15px"
@@ -25,6 +23,10 @@ const btnStyle = {
   float: "right"
   ///margin-right: 20px;
 };
+
+/* handleSelect() {
+  
+} */
 
 class BuscarDatosPaciente extends Component {
   state = {};
@@ -118,9 +120,11 @@ class BuscarDatosPaciente extends Component {
                     title="Historial"
                     id="dropdown-size-medium"
                   >
-                    <MenuItem eventKey="1">Lunes, </MenuItem>
-                    <MenuItem eventKey="2">Martes, </MenuItem>
-                    <MenuItem eventKey="3">Miercoles, </MenuItem>
+                    <MenuItem eventKey="1" onClick={this.handleSelect}>
+                      Lunes{" "}
+                    </MenuItem>
+                    <MenuItem eventKey="2">Martes </MenuItem>
+                    <MenuItem eventKey="3">Miercoles </MenuItem>
                   </DropdownButton>
                 </div>
                 <div className="col-sm-6">

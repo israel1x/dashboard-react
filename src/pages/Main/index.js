@@ -1,31 +1,21 @@
-import React from "react";
-import { Route, Router } from "react-router-dom";
-import { connect } from "react-redux";
 import cx from "classnames";
-import { setMobileNavVisibility } from "../../reducers/Layout";
-import { withRouter } from "react-router-dom";
-
-import Header from "./Header";
-import Footer from "./Footer";
+import React from "react";
+import { connect } from "react-redux";
+import { Route, withRouter } from "react-router-dom";
 import SideBar from "../../components/SideBar";
-import ThemeOptions from "../../components/ThemeOptions";
-import MobileMenu from "../../components/MobileMenu";
+import { setMobileNavVisibility } from "../../reducers/Layout";
 /**
  * Pages
  */
-import Dashboard from "../Dashboard";
 import Components from "../Components";
-import UserProfile from "../UserProfile";
-import MapsPage from "../MapsPage";
-import Forms from "../Forms";
-import Charts from "../Charts";
-import Calendar from "../Calendar";
-import Tables from "../Tables";
 import MedicinaGeneral from "../MedicinaGeneral";
-import TerapiaFisica from "../TerapiaFisica";
 import Odontologia from "../Odontología";
 import Psicologia from "../Psicología";
+import TerapiaFisica from "../TerapiaFisica";
 import TerapiaLenguaje from "../TerapiaLenguaje";
+import UserProfile from "../UserProfile";
+import Footer from "./Footer";
+import Header from "./Header";
 
 const Main = ({ mobileNavVisibility, hideMobileMenu, history }) => {
   history.listen(() => {
@@ -45,12 +35,9 @@ const Main = ({ mobileNavVisibility, hideMobileMenu, history }) => {
 
         <div className="main-panel">
           <Header />
-          <Route exact path="/" component={Dashboard} />
+          <Route exact path="/" component={MedicinaGeneral} />
           <Route path="/components" component={Components} />
           <Route path="/profile" component={UserProfile} />
-          {/*  <Route path="/forms" component={Forms} />
-          <Route path="/tables" component={Tables} />
-          <Route path="/calendar" component={Calendar} /> */}
           <Route path="/medicinageneral" component={MedicinaGeneral} />
           <Route path="/terapiafisica" component={TerapiaFisica} />
           <Route path="/odontologia" component={Odontologia} />
