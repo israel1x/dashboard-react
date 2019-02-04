@@ -1,4 +1,5 @@
 import axios from "axios";
+import Joi from "joi-browser";
 import moment from "moment";
 import React, { Component } from "react";
 import { Tab, Tabs } from "react-bootstrap";
@@ -15,30 +16,13 @@ class TabChild extends Component {
     super(props);
     this.state = {
       hipertension: false,
-      motivoConsulta: "",
-      antePersonal: "",
-      anteFamiliares: "",
-      pactualPaciente: "",
-      ractualOrgPac: "",
-      svitalesPac: "",
-      exfisicoRegA: "",
-      exfisicoRegB: "",
-      desPacienteA: "",
-      ciePacienteA: "",
-      prePacienteA: "",
-      defPacienteA: "",
-      desPacienteB: "",
-      ciePacienteB: "",
-      prePacienteB: "",
-      defPacienteB: "",
-      desPacienteC: "",
-      ciePacienteC: "",
-      prePacienteC: "",
-      defPacienteC: "",
-      trataPac: "",
-      evoluPac: "",
-      prescripPac: "",
+      problemaFuncionalH: "",
 
+      idpaciente: "",
+      fechahora: "",
+      consulta: {
+        motivo: ""
+      },
       antecedentes: {
         personales: {
           hipertensionArterial: false,
@@ -63,8 +47,65 @@ class TabChild extends Component {
           cancer: false,
           otros: false
         },
-        descripAntYOtros: "String"
+        descripAntYOtros: ""
       },
+      medUsoFrec: {
+        utilizacion: "",
+        nombre: "",
+        restricAMedic: {
+          resp: false,
+          cual: ""
+        }
+      },
+      istProblemFunc: {
+        description: ""
+      },
+      anamesisDolor: {
+        duracion: "",
+        escalaIntensidad: "",
+        frecuencia: "",
+        horario: "",
+        evolucion: ""
+      },
+      exploFisica: {
+        observaciones: "",
+        impDiagnostica: "",
+        cie: {
+          code: "",
+          descrip: ""
+        }
+      },
+      tfisioterap: {
+        mquimicos: {
+          ultrasonido: false,
+          elecEstim: false,
+          magnetoTerapia: false,
+          laser: false,
+          nebulizacion: false,
+          ondasChoque: false,
+          parafina: false
+        },
+        mfisicos: {
+          compresQuimicas: "",
+          crioterapia: "",
+          masoterapai: "",
+          to: ""
+        },
+        ejerTerapeuticos: {
+          activos: false,
+          pasivos: false,
+          activosAsistidos: false,
+          ActivosResistidos: false
+        },
+        nota: ""
+      },
+      seguimiento: [
+        {
+          fecha: "",
+          tratamiento: "",
+          indicaciones: ""
+        }
+      ],
 
       date: moment(),
       startDate: moment(),
@@ -82,7 +123,12 @@ class TabChild extends Component {
         { code: "A00", descrip: "Colera con tA" },
         { code: "A00", descrip: "Colera con C" },
         { code: "A00", descrip: "Colera con b" }
-      ]
+      ],
+
+      // VARIABLES PARA LOS ERRORES
+      errors: {
+        descripAntYOtros: "La Descripción es requerida "
+      }
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -90,6 +136,17 @@ class TabChild extends Component {
 
     this.MyOnChangeAutoComplete = this.MyOnChangeAutoComplete.bind(this);
   }
+
+  // JOI VALIDATION: schema and validateTF
+  schema = {
+    descripAntYOtros: Joi.string(),
+    problemaFuncionalH: Joi.string()
+  };
+
+  validateTF = () => {
+    const result = Joi.validate(this.state.descripAntYOtros, this.schema);
+    console.log(result);
+  };
 
   componentDidMount() {
     axios.get(endPointCodeCie).then(response => {
@@ -129,8 +186,6 @@ class TabChild extends Component {
       [name]: status
     });
   } */
-
-  validate = () => {};
 
   buildJsonDataToSend = dataJson => {
     /* var dataMask =
@@ -204,11 +259,17 @@ class TabChild extends Component {
     return dataPreview;
   };
 
+  validate = () => {};
+
   handleSubmit(event) {
     // console.log("El State actual es:" + JSON.stringify(this.state));
     ///alert("El State actual es:" + JSON.stringify(this.state));
 
     event.preventDefault();
+
+    const errors = this.validate();
+    this.setState({ errors });
+    if (errors) return;
     /* const errors = this.validate();
     console.log(errors);
     this.setState({ errors: errors || {} }); */
@@ -270,8 +331,8 @@ class TabChild extends Component {
                             <label>
                               <Input
                                 type="checkbox"
-                                name="hipertension"
-                                value={this.state.hipertension}
+                                name="hipertensionArterial"
+                                value={this.state.hipertensionArterial}
                                 onChange={this.handleInputChange}
                               />{" "}
                               Hipertension Arterial
@@ -290,62 +351,149 @@ class TabChild extends Component {
                           </div>
                           <div>
                             <label>
-                              <Input type="checkbox" name="SI" /> Colesterol
-                              Alto
+                              <Input
+                                type="checkbox"
+                                name="colesterolAlto"
+                                value={
+                                  this.state.antecedentes.personales
+                                    .hipertensionArterial
+                                }
+                                onChange={this.handleInputChange}
+                              />{" "}
+                              Colesterol Alto
                             </label>
                           </div>
                           <div>
                             <label>
-                              <Input type="checkbox" name="SI" /> Osteoartritis
+                              <Input
+                                type="checkbox"
+                                name="osteoartritis"
+                                value={
+                                  this.state.antecedentes.personales
+                                    .osteoartritis
+                                }
+                                onChange={this.handleInputChange}
+                              />{" "}
+                              Osteoartritis
                             </label>
                           </div>
                           <div>
                             <label>
-                              <Input type="checkbox" name="SI" /> ACV
-                            </label>
-                          </div>
-                        </div>
-                        <div className="col-sm-3 checkbox-group">
-                          <div>
-                            <label>
-                              <Input type="checkbox" name="SI" /> Infarto
-                            </label>
-                          </div>
-                          <div>
-                            <label>
-                              <Input type="checkbox" name="SI" /> Arritmias
-                            </label>
-                          </div>
-                          <div>
-                            <label>
-                              <Input type="checkbox" name="SI" /> Cancer
-                            </label>
-                          </div>
-                          <div>
-                            <label>
-                              <Input type="checkbox" name="SI" /> Hepatitis
-                            </label>
-                          </div>
-                          <div>
-                            <label>
-                              <Input type="checkbox" name="SI" /> Tuberculosis
+                              <Input
+                                type="checkbox"
+                                name="acv"
+                                value={this.state.antecedentes.personales.acv}
+                                onChange={this.handleInputChange}
+                              />{" "}
+                              ACV
                             </label>
                           </div>
                         </div>
                         <div className="col-sm-3 checkbox-group">
                           <div>
                             <label>
-                              <Input type="checkbox" name="SI" /> Transfuciones
+                              <Input
+                                type="checkbox"
+                                name="infarto"
+                                value={
+                                  this.state.antecedentes.personales.infarto
+                                }
+                                onChange={this.handleInputChange}
+                              />{" "}
+                              Infarto
                             </label>
                           </div>
                           <div>
                             <label>
-                              <Input type="checkbox" name="SI" /> Accidentes
+                              <Input
+                                type="checkbox"
+                                name="arritmias"
+                                value={
+                                  this.state.antecedentes.personales.arritmias
+                                }
+                                onChange={this.handleInputChange}
+                              />{" "}
+                              Arritmias
                             </label>
                           </div>
                           <div>
                             <label>
-                              <Input type="checkbox" name="SI" /> Otros
+                              <Input
+                                type="checkbox"
+                                name="cancer"
+                                value={
+                                  this.state.antecedentes.personales.cancer
+                                }
+                                onChange={this.handleInputChange}
+                              />{" "}
+                              Cancer
+                            </label>
+                          </div>
+                          <div>
+                            <label>
+                              <Input
+                                type="checkbox"
+                                name="epatitis"
+                                value={
+                                  this.state.antecedentes.personales.epatitis
+                                }
+                                onChange={this.handleInputChange}
+                              />{" "}
+                              Hepatitis
+                            </label>
+                          </div>
+                          <div>
+                            <label>
+                              <Input
+                                type="checkbox"
+                                name="tuberculosis"
+                                value={
+                                  this.state.antecedentes.personales
+                                    .tuberculosis
+                                }
+                                onChange={this.handleInputChange}
+                              />{" "}
+                              Tuberculosis
+                            </label>
+                          </div>
+                        </div>
+                        <div className="col-sm-3 checkbox-group">
+                          <div>
+                            <label>
+                              <Input
+                                type="checkbox"
+                                name="transfuciones"
+                                value={
+                                  this.state.antecedentes.personales
+                                    .transfuciones
+                                }
+                                onChange={this.handleInputChange}
+                              />{" "}
+                              Transfuciones
+                            </label>
+                          </div>
+                          <div>
+                            <label>
+                              <Input
+                                type="checkbox"
+                                name="accidentes"
+                                value={
+                                  this.state.antecedentes.personales.accidentes
+                                }
+                                onChange={this.handleInputChange}
+                              />{" "}
+                              Accidentes
+                            </label>
+                          </div>
+                          <div>
+                            <label>
+                              <Input
+                                type="checkbox"
+                                name="otros"
+                                value={this.state.antecedentes.personales.otros}
+                                onChange={this.handleInputChange}
+                              />{" "}
+                              Otros
                             </label>
                           </div>
                         </div>
@@ -359,38 +507,86 @@ class TabChild extends Component {
                           <div className="col-sm-3 col-sm-offset-1 checkbox-group">
                             <div>
                               <label>
-                                <Input type="checkbox" name="SI" />
+                                <Input
+                                  type="checkbox"
+                                  name="hipertensionArterial"
+                                  value={
+                                    this.state.antecedentes.familiares
+                                      .hipertensionArterial
+                                  }
+                                  onChange={this.handleInputChange}
+                                />
                                 Hipertension Arterial
                               </label>
                             </div>
                             <div>
                               <label>
-                                <Input type="checkbox" name="SI" /> Diabetes
+                                <Input
+                                  type="checkbox"
+                                  name="diabetes"
+                                  value={
+                                    this.state.antecedentes.familiares.diabetes
+                                  }
+                                  onChange={this.handleInputChange}
+                                />{" "}
+                                Diabetes
                               </label>
                             </div>
                           </div>
                           <div className="col-sm-3 checkbox-group">
                             <div>
                               <label>
-                                <Input type="checkbox" name="SI" /> Infarto del
-                                Miocardio
+                                <Input
+                                  type="checkbox"
+                                  name="infartoDelMiocardio"
+                                  value={
+                                    this.state.antecedentes.familiares
+                                      .infartoDelMiocardio
+                                  }
+                                  onChange={this.handleInputChange}
+                                />{" "}
+                                Infarto del Miocardio
                               </label>
                             </div>
                             <div>
                               <label>
-                                <Input type="checkbox" name="SI" /> Demencia
+                                <Input
+                                  type="checkbox"
+                                  name="demencia"
+                                  value={
+                                    this.state.antecedentes.familiares.demencia
+                                  }
+                                  onChange={this.handleInputChange}
+                                />{" "}
+                                Demencia
                               </label>
                             </div>
                           </div>
                           <div className="col-sm-3 checkbox-group">
                             <div>
                               <label>
-                                <Input type="checkbox" name="SI" /> Cancer
+                                <Input
+                                  type="checkbox"
+                                  name="cancer"
+                                  value={
+                                    this.state.antecedentes.familiares.cancer
+                                  }
+                                  onChange={this.handleInputChange}
+                                />{" "}
+                                Cancer
                               </label>
                             </div>
                             <div>
                               <label>
-                                <Input type="checkbox" name="SI" /> Otros
+                                <Input
+                                  type="checkbox"
+                                  name="otros"
+                                  value={
+                                    this.state.antecedentes.familiares.otros
+                                  }
+                                  onChange={this.handleInputChange}
+                                />{" "}
+                                Otros
                               </label>
                             </div>
                           </div>
@@ -403,11 +599,11 @@ class TabChild extends Component {
                         </Label>
                         <Input
                           type="textarea"
-                          name="anteDescripcionOtros"
-                          id="anteDescripcionOtros"
+                          name="descripAntYOtros"
+                          id="descripAntYOtros"
                           rows="2"
-                          value={this.state.anteDescripcionOtros} //pppppppppppppp
-                          onChange={this.handleInputChange} //ppppppppppp
+                          value={this.state.antecedentes.descripAntYOtros}
+                          onChange={this.handleInputChange}
                           placeholder="Ingrese la descripción aquí"
                         />
                       </fieldset>
@@ -423,10 +619,10 @@ class TabChild extends Component {
                       <Label for="medicamentoUtil">Utilización:</Label>
                       <Input
                         type="textarea"
-                        name="medicamentoUtil"
-                        id="medicamentoUtil"
+                        name="utilizacion"
+                        id="utilizacion"
                         rows="6"
-                        value={this.state.medicamentoUtil}
+                        value={this.state.medUsoFrec.utilizacion}
                         onChange={this.handleInputChange}
                         placeholder="Ingrese los detalles ..."
                       />
@@ -437,10 +633,10 @@ class TabChild extends Component {
                       <Label for="medicamentoName">Nombre:</Label>
                       <Input
                         type="textarea"
-                        name="medicamentoName"
-                        id="medicamentoName"
+                        name="nombre"
+                        id="nombre"
                         rows="6"
-                        value={this.state.medicamentoName}
+                        value={this.state.medUsoFrec.nombre}
                         onChange={this.handleInputChange}
                         placeholder="Ingrese el nombre de los medicamentos"
                       />
@@ -454,11 +650,25 @@ class TabChild extends Component {
                     </label>
                     <label className="control-label">
                       {" "}
-                      SI ( <Input type="checkbox" name="SI" /> )
+                      SI ({" "}
+                      <Input
+                        type="checkbox"
+                        name="SIMedUseFor"
+                        value={this.state.SIMedUseFor}
+                        onChange={this.handleInputChange}
+                      />{" "}
+                      )
                     </label>
                     <label className="control-label">
                       {" "}
-                      NO ( <Input type="checkbox" name="NO" /> )
+                      NO ({" "}
+                      <Input
+                        type="checkbox"
+                        name="NOMedUseFor"
+                        value={this.state.NOMedUseFor}
+                        onChange={this.handleInputChange}
+                      />{" "}
+                      )
                     </label>
                   </div>
                   <div className="form-group">
@@ -466,9 +676,9 @@ class TabChild extends Component {
                     <div className="">
                       <Input
                         type="text"
-                        name="otrosMedicamentos"
-                        id="otrosMedicamentos"
-                        value={this.state.otrosMedicamnetos} //ppppppp
+                        name="estricAMediccual"
+                        id="estricAMediccual"
+                        value={this.state.medUsoFrec.restricAMedic.cual} //ppppppp
                         onChange={this.handleInputChange}
                         placeholder="Otros medicamentos"
                       />
@@ -483,10 +693,10 @@ class TabChild extends Component {
                       <Label for="problemaFuncionalH">Descripción</Label>
                       <Input
                         type="textarea"
-                        name="problemaFuncionalH"
-                        id="problemaFuncionalH"
+                        name="istProblemFunc.description"
+                        id="istProblemFunc.description"
                         rows="6"
-                        value={this.state.problemaFuncionalH}
+                        value={this.state.istProblemFunc.description}
                         onChange={this.handleInputChange}
                         placeholder="Ingrese la descripción"
                       />
@@ -502,9 +712,9 @@ class TabChild extends Component {
                       <div className="col-md-5">
                         <Input
                           type="text"
-                          name="dolorDuracion"
-                          id="dolorDuracion"
-                          value={this.state.dolorDuracion} //ppppppp
+                          name="anamesisDolor.duracion"
+                          id="anamesisDolor.duracion"
+                          value={this.state.anamesisDolor.duracion} //ppppppp
                           onChange={this.handleInputChange}
                           placeholder="Ingrese la duración"
                         />
@@ -518,9 +728,9 @@ class TabChild extends Component {
                       <div className="col-md-5">
                         <Input
                           type="number"
-                          name="escalaIntensidad"
-                          id="escalaIntensidad"
-                          value={this.state.escalaIntensidad} //ppppppp
+                          name="anamesisDolor.escalaIntensidad"
+                          id="anamesisDolor.escalaIntensidad"
+                          value={this.state.anamesisDolor.escalaIntensidad}
                           onChange={this.handleInputChange}
                           placeholder="Ingrese la escala de intensidad"
                         />
@@ -534,9 +744,9 @@ class TabChild extends Component {
                       <div className="col-md-5">
                         <Input
                           type="text"
-                          name="anFrecuencia"
-                          id="anFrecuencia"
-                          value={this.state.anFrecuencia} //ppppppp
+                          name="anamesisDolor.frecuencia"
+                          id="anamesisDolor.frecuencia"
+                          value={this.state.anamesisDolor.frecuencia} //ppppppp
                           onChange={this.handleInputChange}
                           placeholder="Ingrese la frecuencia"
                         />
@@ -548,9 +758,9 @@ class TabChild extends Component {
                       <div className="col-md-5">
                         <Input
                           type="text"
-                          name="anHorario"
-                          id="anHorario"
-                          value={this.state.anHorario} //ppppppp
+                          name="anamesisDolor.horario"
+                          id="anamesisDolor.horario"
+                          value={this.state.anamesisDolor.horario}
                           onChange={this.handleInputChange}
                           placeholder="Ingrese el horario"
                         />
@@ -564,10 +774,10 @@ class TabChild extends Component {
                       <div className="col-md-5">
                         <Input
                           type="textarea"
-                          name="anEvolucion"
-                          id="anEvolucion"
+                          name="anamesisDolor.evolucion"
+                          id="anamesisDolor.evolucion"
                           rows="3"
-                          value={this.state.anEvolucion} //ppppppp
+                          value={this.state.anamesisDolor.evolucion} //ppppppp
                           onChange={this.handleInputChange}
                           placeholder="Ingrese la evolución"
                         />
