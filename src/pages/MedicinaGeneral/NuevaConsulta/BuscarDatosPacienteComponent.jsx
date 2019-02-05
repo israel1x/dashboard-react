@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import {
-  Col,
-  Row,
   Button,
+  Card,
+  CardBody,
+  Col,
   Form,
   FormGroup,
-  Label,
   Input,
-  Card,
-  CardBody
+  Label,
+  Row
 } from "reactstrap";
 const formStyles = {
   margin: "15px"
@@ -19,8 +19,8 @@ const divCont = {
   "justify-content": "center"
 };
 const btnStyle = {
-  float: "right"
-  ///margin-right: 20px;
+  float: "left",
+  "margin-top": "18px"
 };
 class BuscarDatosPaciente extends Component {
   state = {};
@@ -115,7 +115,7 @@ class BuscarDatosPaciente extends Component {
                     className="btn btn-info btn-fill btn-wd"
                     style={btnStyle}
                   >
-                    Buscar Paciente
+                    Buscar Historial
                   </Button>
                 </div>
               </Row>
