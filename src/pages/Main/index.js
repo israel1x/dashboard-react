@@ -11,8 +11,9 @@ import Components from "../Components";
 import MedicinaGeneral from "../MedicinaGeneral";
 import Odontologia from "../Odontología";
 import Psicologia from "../Psicología";
-import TerapiaFisica from "../TerapiaFisica";
-import TerapiaLenguaje from "../TerapiaLenguaje";
+import Terapias from "../Terapias";
+import TerapiaFisica from "../Terapias/TerapiaFisica";
+import TerapiaLenguaje from "../Terapias/TerapiaLenguaje";
 import UserProfile from "../UserProfile";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -42,6 +43,7 @@ const Main = ({ mobileNavVisibility, hideMobileMenu, history }) => {
           <Route path="/terapiafisica" component={TerapiaFisica} />
           <Route path="/odontologia" component={Odontologia} />
           <Route path="/psicologia" component={Psicologia} />
+          <Route path="/terapias" component={Terapias} />
           <Route path="/terapialenguaje" component={TerapiaLenguaje} />
           <Footer />
         </div>

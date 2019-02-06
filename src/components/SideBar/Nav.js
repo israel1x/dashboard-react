@@ -57,7 +57,7 @@ class Nav extends Component {
         </li>
         <li
           className={
-            this.isPathActive("/components") || this.state.componentMenuOpen
+            this.isPathActive("/terapias") || this.state.componentMenuOpen
               ? "active"
               : null
           }
@@ -72,7 +72,7 @@ class Nav extends Component {
           >
             <i className="pe-7s-plugin" />
             <p>
-              Tearapia Física
+              Tearapias
               <b className="caret" />
             </p>
           </a>
@@ -85,7 +85,16 @@ class Nav extends Component {
                   }
                 >
                   <Link to="/terapiafisica/nuevaterapiafisica" replace>
-                    Nueva Terapia
+                    Consulta Terapia Física
+                  </Link>
+                </li>
+                <li
+                  className={
+                    this.isPathActive("/terapialenguaje/") ? "active" : null
+                  }
+                >
+                  <Link to="/terapialenguaje/nuevaterapialenguaje" replace>
+                    Consulta Terapia De Lenguaje
                   </Link>
                 </li>
               </ul>
