@@ -7,7 +7,7 @@ import { setMobileNavVisibility } from "../../reducers/Layout";
 /**
  * Pages
  */
-import Components from "../Components";
+//import Components from "../Components";
 import MedicinaGeneral from "../MedicinaGeneral";
 import Odontologia from "../Odontología";
 import Psicologia from "../Psicología";
@@ -37,7 +37,7 @@ const Main = ({ mobileNavVisibility, hideMobileMenu, history }) => {
         <div className="main-panel">
           <Header />
           <Route exact path="/" component={MedicinaGeneral} />
-          <Route path="/components" component={Components} />
+          {/* <Route path="/components" component={Components} /> */}
           <Route path="/profile" component={UserProfile} />
           <Route path="/medicinageneral" component={MedicinaGeneral} />
           <Route path="/terapiafisica" component={TerapiaFisica} />

@@ -1,14 +1,10 @@
-import React, { Component } from "react";
+/* eslint-disable no-unused-vars */
 import axios from "axios";
-import MyInput from "./Myinput";
-import { TabView, TabPanel } from "primereact/tabview";
-import { Col, Row, Button, Form, FormGroup, Label, Input } from "reactstrap";
-import { Field, reduxForm } from "redux-form";
-import renderField from "components/FormInputs/renderField";
-
-import { Tabs, Tab, ControlLabel, Checkbox } from "react-bootstrap";
-import { SingleDatePicker, DateRangePicker } from "react-dates";
 import moment from "moment";
+import React, { Component } from "react";
+import { ControlLabel, Tab, Tabs } from "react-bootstrap";
+import { SingleDatePicker } from "react-dates";
+import { Button, Col, FormGroup, Input, Label, Row } from "reactstrap";
 
 const apiEndpoint =
   "http://ec2-34-216-62-59.us-west-2.compute.amazonaws.com:5000/medicalcards/";

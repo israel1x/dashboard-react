@@ -1,15 +1,7 @@
 import React from "react";
+import { Nav, Navbar, NavItem } from "react-bootstrap";
 import { connect } from "react-redux";
 import { toggleMobileNavVisibility } from "../../reducers/Layout";
-import {
-  Navbar,
-  Nav,
-  NavItem,
-  NavDropdown,
-  MenuItem,
-  FormGroup,
-  FormControl
-} from "react-bootstrap";
 
 const Header = ({ showMobileMenu, toggleMobileNavVisibility }) => (
   <Navbar fluid={true}>

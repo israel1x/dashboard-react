@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import {
-  Col,
-  Row,
   Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
   Card,
-  CardBody
+  CardBody,
+  Col,
+  FormGroup,
+  Input,
+  Label,
+  Row
 } from "reactstrap";
 //import "./buscardatospaciente.scss";
 

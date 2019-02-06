@@ -10,7 +10,7 @@ class SideBar extends Component {
 
   render() {
     let {
-      location,
+      /*  location, */
       backgroundColor,
       enableBackgroundImage,
       backgroundImage

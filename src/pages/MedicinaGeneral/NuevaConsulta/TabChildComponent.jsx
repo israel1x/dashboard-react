@@ -1,14 +1,9 @@
-import React, { Component } from "react";
+/* eslint-disable no-unused-vars */
 import axios from "axios";
+import React, { Component } from "react";
+import { Tab, Tabs } from "react-bootstrap";
+import { Button, Col, FormGroup, Input, Label, Row } from "reactstrap";
 import MyInput from "./Myinput";
-//import Joi from "joi-browser";
-//import { Link } from "react-router-dom";
-import { TabView, TabPanel } from "primereact/tabview";
-import { Col, Row, Button, Form, FormGroup, Label, Input } from "reactstrap";
-import { Field, reduxForm } from "redux-form";
-import renderField from "components/FormInputs/renderField";
-
-import { Tabs, Tab } from "react-bootstrap";
 
 const apiEndpoint =
   "http://ec2-34-216-62-59.us-west-2.compute.amazonaws.com:5000/medicalcards/";
@@ -206,10 +201,7 @@ class TabChild extends Component {
     return (
       <div>
         <div className="content-section introduction">
-          <div className="feature-intro">
-            {/* <h1>TabView</h1>
-            <p>TabView is a container component to group content with tabs.</p> */}
-          </div>
+          <div className="feature-intro" />
         </div>
         <form onSubmit={this.handleSubmit}>
           <div className="content-section implementation">
@@ -219,11 +211,6 @@ class TabChild extends Component {
               activeIndex={this.state.activeIndex}
               onTabChange={e => this.setState({ activeIndex: e.index })}
             >
-              {/*   <TabView
-              activeIndex={this.state.activeIndex}
-              onTabChange={e => this.setState({ activeIndex: e.index })}
-            > */}
-
               <Tab eventKey={1} title={<span>Consulta</span>}>
                 <Row form="true">
                   <Col sm="12">
@@ -235,19 +222,6 @@ class TabChild extends Component {
                       placeholder="Ingrese los motivos de la consulta aquí"
                       rows="6"
                     />
-                    {/* <FormGroup>
-                      <Label for="motivoConsulta">1. Motivo de Consulta</Label>
-                      <Input
-                        type="textarea"
-                        // model=".consulta"
-                        name="motivoConsulta"
-                        id="motivoConsulta"
-                        rows="6"
-                        value={this.state.motivoConsulta}
-                        onChange={this.handleInputChange}
-                        placeholder="Ingrese los motivos de la consulta aquí"
-                      />
-                    </FormGroup> */}
                   </Col>
                 </Row>
               </Tab>
@@ -268,14 +242,6 @@ class TabChild extends Component {
                         onChange={this.handleInputChange}
                         placeholder="Ingrese los antecedentes aquí"
                       />
-                      {/*   <Control.text
-                      model=".antecedentespaciente"
-                      id="antecedentespaciente"
-                      name="antecedentespaciente"
-                      placeholder="First Name"
-                      className="form-control"
-                      value={this.state.antepersonal}
-                    /> */}
 
                       <Label for="anteFamiliares">
                         3. Antecedentes Familiares
@@ -293,12 +259,6 @@ class TabChild extends Component {
                   </Col>
                 </Row>
               </Tab>
-
-              {/* <TabPanel
-                header="Problema Actual"
-                //leftIcon="pi pi-search"
-                //rightIcon="pi pi-check"
-              > */}
 
               <Tab eventKey={3} title={<span>Problema Actual</span>}>
                 <Row>
@@ -321,7 +281,6 @@ class TabChild extends Component {
                 </Row>
               </Tab>
               <Tab eventKey={4} title={<span>Pre-Consulta</span>}>
-                {/*  <TabPanel header="Pre-Consulta"> */}
                 <Row>
                   <Col sm="12">
                     <FormGroup>
@@ -354,7 +313,6 @@ class TabChild extends Component {
                 </Row>
               </Tab>
               <Tab eventKey={5} title={<span>Examen Físico</span>}>
-                {/* <TabPanel header="Examen Físico"> */}
                 <Row>
                   <Col sm="12">
                     <FormGroup>
@@ -383,7 +341,6 @@ class TabChild extends Component {
                 </Row>
               </Tab>
               <Tab eventKey={6} title={<span>Diagnóstico</span>}>
-                {/* <TabPanel header="Diagnóstico"> */}
                 <Row>
                   <Col sm="12">
                     <FormGroup>
@@ -506,7 +463,6 @@ class TabChild extends Component {
                 </Row>
               </Tab>
               <Tab eventKey={7} title={<span>Tratamiento</span>}>
-                {/* <TabPanel header="Tratamiento"> */}
                 <Row>
                   <Col sm="12">
                     <FormGroup>
@@ -525,7 +481,6 @@ class TabChild extends Component {
                 </Row>
               </Tab>
               <Tab eventKey={8} title={<span>Evolución y Prescripción</span>}>
-                {/* <TabPanel header="Evolución y Prescripción"> */}
                 <Row>
                   <Col sm="6">
                     <FormGroup>
@@ -557,7 +512,6 @@ class TabChild extends Component {
                   </Col>
                 </Row>
               </Tab>
-              {/* </TabView> */}
             </Tabs>
             <div>
               <Button type="submit" className="btn btn-info btn-fill btn-wd">

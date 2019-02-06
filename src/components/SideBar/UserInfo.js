@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable jsx-a11y/href-no-hash */
+import imageUserDefault from "assets/images/default-avatar.png";
+import cx from "classnames";
 import React, { Component } from "react";
 import { Collapse } from "react-bootstrap";
 import { connect } from "react-redux";
-import cx from "classnames";
-import imageUserDefault from "assets/images/default-avatar.png";
 
 class UserInfo extends Component {
   state = {
