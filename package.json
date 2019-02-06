@@ -54,6 +54,8 @@
     "react-dates": "^12.6.0",
     "react-dev-utils": "^4.0.1",
     "react-dom": "^15.6.1",
+    "react-drip-form": "0.0.4",
+    "react-drip-form-components": "0.0.2",
     "react-google-maps": "^7.3.0",
     "react-map-gl": "^3.0.4",
     "react-notification-system": "^0.2.15",

@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
+import { Route } from "react-router-dom";
+import NuevaPsicologia from "./NuevaPsicologia";
 
-class Psicologia extends Component {
-  state = {};
-  render() {
-    return <div />;
-  }
-}
-
+const Psicologia = ({ match }) => (
+  <div className="content">
+    <Route path={`${match.url}/nuevapsicologia`} component={NuevaPsicologia} />
+  </div>
+);
 export default Psicologia;

@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { Component } from "react";
 import Select from "react-select";
 import {
@@ -17,16 +16,18 @@ const formStyles = {
 };
 const divCont = {
   display: "flex",
-  "align-items": "center",
-  "justify-content": "center"
+  alignItems: "center",
+  justifyContent: "center"
 };
 const btnStyle = {
   float: "left",
-  "margin-top": "18px"
+  marginTop: "18px"
 };
 
 const apiEndPointHistorialTerapiaFisica =
   "http://ec2-34-216-62-59.us-west-2.compute.amazonaws.com:5000/tfisicamedicalcards?where[idpaciente]=2000";
+
+//pacientes con historial id = 2000 , id 1002 1001 y 1003
 
 /* handleSelect() {
   
@@ -38,13 +39,13 @@ class BuscarDatosPaciente extends Component {
     this.state = {
       idPacienteTF: "",
       historialTF: [],
-      listDatesH: [
+      /*  listDatesH: [
         {
           value: "2019-02-04T16:00:00.000Z",
           label: "febrero"
         },
         { value: "2019-03-01T16:00:00.000Z", label: "marzo" }
-      ],
+      ], */
       fechaSelecionada: ""
     };
 
@@ -53,8 +54,10 @@ class BuscarDatosPaciente extends Component {
   }
 
   componentDidMount() {
-    console.log("props", this.props);
+    console.log("props buscarDatos", this.props);
     //this.getHistorialTerapiaFisica(apiEndPointHistorialTerapiaFisica);
+    this.props.getHistorial();
+    ///console.log(this.props.getHistorialTerapiaFisica);
   }
 
   mostrarAlert = () => {
@@ -67,26 +70,7 @@ class BuscarDatosPaciente extends Component {
         onConfirm={() => this.setState({ message1: true })}
       /> */
     );
-  };
-
-  getHistorialTerapiaFisica = apiEndPointHistorialTerapiaFisica => {
-    axios.get(apiEndPointHistorialTerapiaFisica).then(response => {
-      if (response.data.length === 0) {
-        console.log("NO TIENE HISTORIAL");
-        /* return (
-          
-        ); */
-      } else {
-        this.setState({ historialTF: response.data });
-      }
-      console.log(response.data);
-      console.log(this.state.historialTF.length);
-      this.showListHistorial(this.state.historialTF);
-    });
-  };
-
-  // Muestra la lista de fechas del historial en el select, coge del estado
-  showListHistorial = data => {
+  }; /* showListHistorial = data => {
     //const data = this.state.historialTF;
     // `<li>${item.fechahora}</li>`
     const items = data.map(item => ({
@@ -96,18 +80,38 @@ class BuscarDatosPaciente extends Component {
     console.log("array con fechas ->");
     console.log(items);
     this.setState({ listDatesH: items });
+  }; */ /* 
+      } else {
+        this.setState({ historialTF: response.data });
+      }
+      console.log(response.data);
+      console.log(this.state.historialTF.length);
+      this.showListHistorial(this.state.historialTF);
+    });
   };
+ */ // Muestra la lista de fechas del historial en el select, coge del estado // funcion para manejar el select
 
-  // funcion para manejar el select
-  handleChangeSelect = fechaSelecionada => {
+  /* 
+
+  getHistorialTerapiaFisica = apiEndPointHistorialTerapiaFisica => {
+    axios.get(apiEndPointHistorialTerapiaFisica).then(response => {
+      if (response.data.length === 0) {
+        console.log("NO TIENE HISTORIAL");
+        /* return (
+          
+        ); */
+
+  /* handleChangeSelect = fechaSelecionada => {
     this.setState({ fechaSelecionada });
+
     console.log(`Eligio:`, fechaSelecionada);
-  };
+  }; */
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log("hola");
-    this.handleChangeSelect();
+
+    //this.handleChangeSelect();
+    //this.props.handleSelect();
   }
 
   render() {
@@ -190,38 +194,21 @@ class BuscarDatosPaciente extends Component {
               <Row className="form-group row-buscar" style={divCont}>
                 <div className="col-sm-6">
                   <Label for="selecthistorial">Historial:</Label>
-                  {/*  <Input
-                    type="select"
-                    name="emailhistorial"
-                    id="selecthistorial"
-                  /> */}
-
-                  {/*  <DropdownButton
-                    bsSize="large"
-                    title="Historial"
-                    id="dropdown-size-medium"
-                  >
-                    <MenuItem eventKey="1" onClick={this.handleSelect}>
-                      Lunes{" "}
-                    </MenuItem>
-                    <MenuItem eventKey="2">Martes </MenuItem>
-                    <MenuItem eventKey="3">Miercoles </MenuItem>
-                  </DropdownButton> */}
 
                   <Select
-                    value={this.state.fechaSelecionada}
-                    onChange={this.handleChangeSelect}
-                    options={this.state.listDatesH}
-                    defaultValue={this.state.listDatesH[0]}
+                    //value={this.state.fechaSelecionada}
+                    onChange={this.props.handleSelect}
+                    options={this.props.jsonFechas}
+                    //defaultValue={this.state.listDatesH[0]}
                   />
                 </div>
                 <div className="col-sm-6">
                   <Button
                     className="btn btn-info btn-fill btn-wd"
-                    type="submit"
+                    onClick={this.props.botonNuevaConsulta}
                     style={btnStyle}
                   >
-                    Buscar Historial
+                    Nueva Consulta
                   </Button>
                 </div>
               </Row>

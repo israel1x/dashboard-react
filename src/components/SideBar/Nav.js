@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
 import { Collapse } from "react-bootstrap";
+import { Link, withRouter } from "react-router-dom";
 
 class Nav extends Component {
   state = {};
@@ -15,6 +15,7 @@ class Nav extends Component {
             <p>Pagina Principal</p>
           </Link>
         </li>
+
         <li
           className={
             this.isPathActive("/medicinageneral") || this.state.mapMenuOpen
@@ -80,12 +81,10 @@ class Nav extends Component {
               <ul className="nav">
                 <li
                   className={
-                    this.isPathActive("/terapiafisica/nuevaterapiafisica")
-                      ? "active"
-                      : null
+                    this.isPathActive("/terapiafisica/") ? "active" : null
                   }
                 >
-                  <Link to="/terapiafisica/nuevaterapiafisica">
+                  <Link to="/terapiafisica/nuevaterapiafisica" replace>
                     Nueva Terapia
                   </Link>
                 </li>
@@ -93,6 +92,62 @@ class Nav extends Component {
             </div>
           </Collapse>
         </li>
+
+        <li
+          className={
+            this.isPathActive("/psicologia") || this.state.tableMenuOpen
+              ? "active"
+              : null
+          }
+        >
+          <a
+            onClick={() =>
+              this.setState({ tableMenuOpen: !this.state.tableMenuOpen })
+            }
+            data-toggle="collapse"
+          >
+            <i className="pe-7s-news-paper" />
+            <p>
+              Psicología <b className="caret" />
+            </p>
+          </a>
+          <Collapse in={this.state.tableMenuOpen}>
+            <div>
+              <ul className="nav">
+                <li
+                  className={
+                    this.isPathActive("/psicologia/nuevapsicologia")
+                      ? "active"
+                      : null
+                  }
+                >
+                  <Link to="/psicologia/nuevapsicologia">Nueva Consulta</Link>
+                </li>
+                {/* <li
+                  className={
+                    this.isPathActive("/tables/extended-tables")
+                      ? "active"
+                      : null
+                  }
+                >
+                  <Link to="/tables/extended-tables">Extended Tables</Link>
+                </li> */}
+                {/* <li
+                  className={
+                    this.isPathActive("/tables/fixed-data-table")
+                      ? "active"
+                      : null
+                  }
+                >
+                  <Link to="/tables/react-bootstrap-table">
+                    React Bootstrap Table
+                  </Link>
+                </li> */}
+              </ul>
+            </div>
+          </Collapse>
+        </li>
+
         <li
           className={
             this.isPathActive("/components") || this.state.formMenuOpen

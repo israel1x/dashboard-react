@@ -24,6 +24,9 @@ class TabChild extends Component {
       hipertension: false,
       problemaFuncionalH: "",
 
+      //varibles del componente buscardatos
+      idPacienteTf: "",
+
       idpaciente: "",
       fechahora: "",
 
@@ -101,6 +104,12 @@ class TabChild extends Component {
       endDate: moment(),
       dateRangeFocusedInput: null,
 
+      //SETEAR EL FORMULARIO CON DATOS
+      antecedentesdescripAntYOtros: "",
+      jsonDataForFechaIdMongoOnTab: [],
+      banderaTab: 0,
+      banderaTabClean: 0,
+
       //VARIABLES PARA LAS TABS
       activeTab: 1,
 
@@ -126,6 +135,13 @@ class TabChild extends Component {
     this.MyOnChangeAutoComplete = this.MyOnChangeAutoComplete.bind(this);
   }
 
+  ///
+  handleListHistoryTF = () => {
+    console.log("traigo lista de TF desde el select buscar historial");
+    // USE .filter()  para obtener los datos de la fecha seleccionada
+    //
+  };
+
   // JOI VALIDATION: schema and validateTF
   schema = {
     descripAntYOtros: Joi.string(),
@@ -138,10 +154,15 @@ class TabChild extends Component {
   };
 
   componentDidMount() {
-    axios.get(endPointCodeCie).then(response => {
+    console.log("props tabchild", this.props);
+
+    // LLAMADA PARA LOS CODIGOS CIE10
+    /* axios.get(endPointCodeCie).then(response => {
       this.setState({ dataCodes: response.data });
       console.log(response.data);
-    });
+    }); */
+
+    //this.getJsonHistorialFecha();
   }
 
   handleInputChange(event) {
@@ -367,6 +388,32 @@ class TabChild extends Component {
       [element.name]: selectedEnfermedad.code + " " + selectedEnfermedad.descrip
     });
   };
+
+  setInfoOfHistory = () => {
+    this.setState({ antecedentesdescripAntYOtros: "hola" });
+  };
+
+  componentWillReceiveProps(props) {
+    console.log("bandera tab", this.state.banderaTab);
+    console.log("bandera props ", this.props.bandera);
+
+    console.log("bandera tabClean", this.state.banderaTabClean);
+    console.log("bandera propsClean ", this.props.banderaClean);
+
+    if (this.state.banderaTab !== this.props.bandera) {
+      this.setState({
+        jsonDataForFechaIdMongoOnTab: this.props.jsonDataForFechaIdMongo
+      });
+      console.log("DATOS", this.state.jsonDataForFechaIdMongoOnTab);
+      console.log("PROPS", this.props.jsonDataForFechaIdMongo);
+      this.setState({ antecedentesdescripAntYOtros: "hola israel dale" });
+      console.log("se actualizo el estado en el component TabChild");
+    }
+    if (this.props.banderaClean !== this.state.banderaTabClean) {
+      console.log("VOY A LIMPIAR EL FORMULARIO");
+      this.setState({ antecedentesdescripAntYOtros: " " });
+    }
+  }
 
   render() {
     let { date } = this.state;
