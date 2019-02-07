@@ -4,6 +4,10 @@ import React from "react";
 const endPointCodeCie =
   "http://ec2-34-216-62-59.us-west-2.compute.amazonaws.com:5000/cies/";
 
+const ciesStyle = {
+  width: "338px"
+};
+
 export default ({ items, onChange, label, placeholder, name }) => {
   return (
     <Downshift
@@ -26,7 +30,11 @@ export default ({ items, onChange, label, placeholder, name }) => {
           >
             {label}
           </label>{" "}
-          <input name={name} {...getInputProps({ placeholder })} />
+          <input
+            name={name}
+            style={ciesStyle}
+            {...getInputProps({ placeholder })}
+          />
           {isOpen ? (
             <div className="downshift-dropdown">
               {items

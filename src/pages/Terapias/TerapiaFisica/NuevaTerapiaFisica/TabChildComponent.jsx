@@ -14,10 +14,14 @@ const apiEndpoint =
 const apiEndpointTerapiaFisica =
   "http://ec2-34-216-62-59.us-west-2.compute.amazonaws.com:5000/tfisicamedicalcards/";
 
-/* const endPointCodeCie =
-  "http://ec2-34-216-62-59.us-west-2.compute.amazonaws.com:5000/cies/"; */
+const endPointCodeCie =
+  "http://ec2-34-216-62-59.us-west-2.compute.amazonaws.com:5000/cies/";
 
-const endPointCodeCie = "http://192.168.1.10:5000/cies/";
+const ciesStyle = {
+  width: "338px"
+};
+
+/* onst endPointCodeCie = "http://192.168.1.10:5000/cies/"; */
 class TabChild extends Component {
   constructor(props) {
     super(props);
@@ -158,10 +162,10 @@ class TabChild extends Component {
     console.log("props tabchild", this.props);
 
     // LLAMADA PARA LOS CODIGOS CIE10
-    /* axios.get(endPointCodeCie).then(response => {
+    axios.get(endPointCodeCie).then(response => {
       this.setState({ dataCodes: response.data });
       console.log(response.data);
-    }); */
+    });
 
     //this.getJsonHistorialFecha();
   }
@@ -924,6 +928,7 @@ class TabChild extends Component {
 
                   <div className="form-group">
                     <MyAutoCompleteField
+                      style={ciesStyle}
                       items={this.state.dataCodes}
                       onChange={this.MyOnChangeAutoComplete}
                       id="exploFisicaciedescrip"

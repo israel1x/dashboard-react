@@ -4,9 +4,7 @@ import Joi from "joi-browser";
 import moment from "moment";
 import React, { Component } from "react";
 import { Tab, Tabs } from "react-bootstrap";
-import { SingleDatePicker } from "react-dates";
-import { Button, Col, FormGroup, Input, Label, Row } from "reactstrap";
-import MyAutoCompleteField from "./MyAutoCompleteField";
+import { Button, Input } from "reactstrap";
 
 const apiEndpoint =
   "http://ec2-34-216-62-59.us-west-2.compute.amazonaws.com:5000/medicalcards/";
@@ -114,6 +112,9 @@ class TabChild extends Component {
       //VARIABLES PARA LAS TABS
       activeTab: 1,
 
+      // KEY PRESS
+      currentKey: "",
+
       //VARIABLES DEL AUTOCOMPLETE
       descrip: "",
       dataCodes: [],
@@ -134,6 +135,8 @@ class TabChild extends Component {
     //this.handleChecked = this.handleChecked.bind(this);
 
     this.MyOnChangeAutoComplete = this.MyOnChangeAutoComplete.bind(this);
+
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   ///
@@ -142,6 +145,24 @@ class TabChild extends Component {
     // USE .filter()  para obtener los datos de la fecha seleccionada
     //
   };
+
+  // PARA MANEJAR EL KEYPRESS
+  handleKeyPress(e) {
+    this.setState({ currentKey: e.keyCode });
+    if (e.keyCode === 83) {
+      console.log("You just pressed Escape!");
+      let currentTab = this.state.activeTab;
+      if (currentTab === 7) {
+        this.setState({ activeTab: 1 });
+      } else {
+        this.setState({ activeTab: currentTab + 1 });
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.handleKeyPress);
+  }
 
   // JOI VALIDATION: schema and validateTF
   schema = {
@@ -156,6 +177,8 @@ class TabChild extends Component {
 
   componentDidMount() {
     console.log("props tabchild", this.props);
+
+    document.addEventListener("keydown", this.handleKeyPress);
 
     // LLAMADA PARA LOS CODIGOS CIE10
     /* axios.get(endPointCodeCie).then(response => {
@@ -455,7 +478,7 @@ class TabChild extends Component {
                       </label>
                       <div className="col-md-5">
                         <Input
-                          type="number"
+                          type="text"
                           name="anamesisDolorescalaIntensidad"
                           id="anamesisDolorescalaIntensidad"
                           value={this.state.anamesisDolorescalaIntensidad}
@@ -502,469 +525,959 @@ class TabChild extends Component {
                 </div>
               </Tab>
 
-              <Tab eventKey={2} title={<span>Medicamentos</span>}>
-                <Row>
-                  <Col sm="6">
-                    <FormGroup>
-                      <Label for="medicamentoUtil">Utilización:</Label>
-                      <Input
-                        type="textarea"
-                        name="medUsoFrecutilizacion"
-                        id="medUsoFrecutilizacion"
-                        rows="6"
-                        value={this.state.medUsoFrecutilizacion}
-                        onChange={this.handleInputChange}
-                        placeholder="Ingrese los detalles ..."
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col sm="6">
-                    <FormGroup>
-                      <Label for="medicamentoName">Nombre:</Label>
-                      <Input
-                        type="textarea"
-                        name="medUsoFrecnombre"
-                        id="medUsoFrecnombre"
-                        rows="6"
-                        value={this.state.medUsoFrecnombre}
-                        onChange={this.handleInputChange}
-                        placeholder="Ingrese el nombre de los medicamentos"
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
-                <div className="content">
-                  <div className="form-group">
-                    <label className="control-label">
-                      Reaciones adversas a medicamentos:{" "}
-                    </label>
-                    <label className="control-label">
-                      {" "}
-                      SI ({" "}
-                      <Input
-                        type="checkbox"
-                        name="SIMedUseFor"
-                        value={this.state.SIMedUseFor}
-                        onChange={this.handleInputChange}
-                      />{" "}
-                      )
-                    </label>
-                    <label className="control-label">
-                      {" "}
-                      NO ({" "}
-                      <Input
-                        type="checkbox"
-                        name="NOMedUseFor"
-                        value={this.state.NOMedUseFor}
-                        onChange={this.handleInputChange}
-                      />{" "}
-                      )
-                    </label>
-                  </div>
-                  <div className="form-group">
-                    <label className="control-label">Otros:</label>
-                    <div className="">
-                      <Input
-                        type="text"
-                        name="estricAMediccual"
-                        id="estricAMediccual"
-                        value={this.state.medUsoFrecrestricAMediccual} //ppppppp
-                        onChange={this.handleInputChange}
-                        placeholder="Otros medicamentos"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </Tab>
-              <Tab eventKey={3} title={<span>H. Problema Funcional</span>}>
-                <Row>
-                  <Col sm="12">
-                    <FormGroup>
-                      <Label for="problemaFuncionalH">Descripción</Label>
-                      <Input
-                        type="textarea"
-                        name="istProblemFuncdescription"
-                        id="istProblemFuncdescription"
-                        rows="6"
-                        value={this.state.istProblemFuncdescription}
-                        onChange={this.handleInputChange}
-                        placeholder="Ingrese la descripción"
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
-              </Tab>
-              <Tab eventKey={4} title={<span>Anamnesis del Dolor</span>}>
+              <Tab eventKey={2} title={<span>Anamnesis Personal A</span>}>
                 <div className="content">
                   <div className="form-horizontal">
                     <div className="form-group">
-                      <label className="control-label col-md-2">Duración</label>
-                      <div className="col-md-5">
+                      <label className="control-label col-md-2">
+                        Edad de la Madre:
+                      </label>
+                      <div className="col-md-4">
+                        <Input
+                          type="number"
+                          name="motivoIngreso"
+                          id="motivoIngreso"
+                          value={this.state.motivoIngreso} //ppppppp
+                          onChange={this.handleInputChange}
+                          placeholder="Al momeneto de la cocepción"
+                        />
+                      </div>
+                      <label className="control-label col-md-2">
+                        Embarazo Controlado:
+                      </label>
+                      <div className="col-md-4">
                         <Input
                           type="text"
-                          name="anamesisDolorduracion"
-                          id="anamesisDolorduracion"
-                          value={this.state.anamesisDolorduracion} //ppppppp
+                          name="motivoIngreso"
+                          id="motivoIngreso"
+                          value={this.state.motivoIngreso} //ppppppp
+                          onChange={this.handleInputChange}
+                          placeholder="Ingrese la duración"
+                        />
+                      </div>
+                    </div>
+                    <legend />
+                    <div className="form-group">
+                      <label className="control-label col-md-2">
+                        Estado Emocional de la Madre:
+                      </label>
+                      <div className="col-md-4">
+                        <Input
+                          type="textarea"
+                          rows="2"
+                          name="anamesisDolorescalaIntensidad"
+                          id="anamesisDolorescalaIntensidad"
+                          value={this.state.anamesisDolorescalaIntensidad}
+                          onChange={this.handleInputChange}
+                          placeholder="Ingrese los comentarios..."
+                        />
+                      </div>
+                      <label className="control-label col-md-2">
+                        Alimentación:
+                      </label>
+                      <div className="col-md-4">
+                        <Input
+                          type="text"
+                          name="motivoIngreso"
+                          id="motivoIngreso"
+                          value={this.state.motivoIngreso} //ppppppp
                           onChange={this.handleInputChange}
                           placeholder="Ingrese la duración"
                         />
                       </div>
                     </div>
 
+                    <legend />
                     <div className="form-group">
                       <label className="control-label col-md-2">
-                        Escala de Intensidad
+                        Enfermedades o Infecciones:
                       </label>
-                      <div className="col-md-5">
+                      <div className="col-md-10">
                         <Input
-                          type="number"
-                          name="anamesisDolorescalaIntensidad"
-                          id="anamesisDolorescalaIntensidad"
-                          value={this.state.anamesisDolorescalaIntensidad}
-                          onChange={this.handleInputChange}
-                          placeholder="Ingrese la escala de intensidad"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="form-group">
-                      <label className="control-label col-md-2">
-                        Frecuencia
-                      </label>
-                      <div className="col-md-5">
-                        <Input
-                          type="text"
+                          type="textarea"
+                          rows="2"
                           name="anamesisDolorfrecuencia"
                           id="anamesisDolorfrecuencia"
                           value={this.state.anamesisDolorfrecuencia} //ppppppp
                           onChange={this.handleInputChange}
-                          placeholder="Ingrese la frecuencia"
+                          placeholder="Ingrese las enfermedades o Infecciones"
                         />
                       </div>
                     </div>
 
+                    <legend />
                     <div className="form-group">
-                      <label className="control-label col-md-2">Horario</label>
-                      <div className="col-md-5">
+                      <label className="control-label col-md-3">
+                        Medicamentos:
+                      </label>
+                      <div className="col-md-3">
+                        <label>
+                          <Input
+                            type="radio"
+                            name="radioGroup"
+                            id="anamesisDolorevolucion"
+                            value={this.state.anamesisDolorevolucion} //ppppppp
+                            onChange={this.handleInputChange}
+                          />
+                          SI
+                        </label>
+                        <label>
+                          <Input
+                            type="radio"
+                            name="radioGroup"
+                            id="anamesisDolorevolucion"
+                            value={this.state.anamesisDolorevolucion} //ppppppp
+                            onChange={this.handleInputChange}
+                          />
+                          NO
+                        </label>
+                      </div>
+
+                      <label className="control-label col-md-3">
+                        Tramumatismo:
+                      </label>
+                      <div className="col-md-3">
+                        <label>
+                          <Input
+                            type="radio"
+                            name="radioGroup"
+                            id="anamesisDolorevolucion"
+                            value={this.state.anamesisDolorevolucion} //ppppppp
+                            onChange={this.handleInputChange}
+                          />
+                          SI
+                        </label>
+                        <label>
+                          <Input
+                            type="radio"
+                            name="radioGroup"
+                            id="anamesisDolorevolucion"
+                            value={this.state.anamesisDolorevolucion} //ppppppp
+                            onChange={this.handleInputChange}
+                          />
+                          NO
+                        </label>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label className="control-label col-md-3">Rayos X:</label>
+                      <div className="col-md-3">
+                        <label>
+                          <Input
+                            type="radio"
+                            name="radioGroup"
+                            id="anamesisDolorevolucion"
+                            value={this.state.anamesisDolorevolucion} //ppppppp
+                            onChange={this.handleInputChange}
+                          />
+                          SI
+                        </label>
+                        <label>
+                          <Input
+                            type="radio"
+                            name="radioGroup"
+                            id="anamesisDolorevolucion"
+                            value={this.state.anamesisDolorevolucion} //ppppppp
+                            onChange={this.handleInputChange}
+                          />
+                          NO
+                        </label>
+                      </div>
+
+                      <label className="control-label col-md-3">
+                        Traumatismo Sanguineo:
+                      </label>
+                      <div className="col-md-3">
+                        <label>
+                          <Input
+                            type="radio"
+                            name="radioGroup"
+                            id="anamesisDolorevolucion"
+                            value={this.state.anamesisDolorevolucion} //ppppppp
+                            onChange={this.handleInputChange}
+                          />
+                          SI
+                        </label>
+                        <label>
+                          <Input
+                            type="radio"
+                            name="radioGroup"
+                            id="anamesisDolorevolucion"
+                            value={this.state.anamesisDolorevolucion} //ppppppp
+                            onChange={this.handleInputChange}
+                          />
+                          NO
+                        </label>
+                      </div>
+                    </div>
+
+                    <legend />
+
+                    <div className="form-group">
+                      <label className="control-label col-md-2">
+                        Tipo de Gestación:
+                      </label>
+                      <div className="col-md-4">
                         <Input
                           type="text"
-                          name="anamesisDolorhorario"
-                          id="anamesisDolorhorario"
-                          value={this.state.anamesisDolorhorario}
+                          name="tipoGestacion"
+                          id="anamesisDolorevolucion"
+                          value={this.state.anamesisDolorevolucion} //ppppppp
                           onChange={this.handleInputChange}
-                          placeholder="Ingrese el horario"
+                        />
+                      </div>
+
+                      <label className="control-label col-md-2">
+                        Asistido por:
+                      </label>
+                      <div className="col-md-4">
+                        <Input
+                          type="text"
+                          name="asistidoPor"
+                          id="asistidopor"
+                          value={this.state.anamesisDolorevolucion} //ppppppp
+                          onChange={this.handleInputChange}
                         />
                       </div>
                     </div>
 
                     <div className="form-group">
                       <label className="control-label col-md-2">
-                        Evolución
+                        Tipo de Parto:
+                      </label>
+                      <div className="col-md-4">
+                        <Input
+                          type="text"
+                          name="tipoParto"
+                          id="anamesisDolorevolucion"
+                          value={this.state.anamesisDolorevolucion} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+
+                      <label className="control-label col-md-2">Hipoxia:</label>
+                      <div className="col-md-4">
+                        <label>
+                          <Input
+                            type="radio"
+                            name="radioGroup"
+                            id="anamesisDolorevolucion"
+                            value={this.state.anamesisDolorevolucion} //ppppppp
+                            onChange={this.handleInputChange}
+                          />
+                          SI
+                        </label>
+                        <label>
+                          <Input
+                            type="radio"
+                            name="radioGroup"
+                            id="anamesisDolorevolucion"
+                            value={this.state.anamesisDolorevolucion} //ppppppp
+                            onChange={this.handleInputChange}
+                          />
+                          NO
+                        </label>
+                      </div>
+                    </div>
+
+                    <legend />
+
+                    <div className="form-group">
+                      <label className="control-label col-md-2">
+                        Complicaciones Durante el Embarazo y/o Parto:
+                      </label>
+                      <div className="col-md-10">
+                        <Input
+                          type="textarea"
+                          rows="2"
+                          name="anamesisDolorfrecuencia"
+                          id="anamesisDolorfrecuencia"
+                          value={this.state.anamesisDolorfrecuencia} //ppppppp
+                          onChange={this.handleInputChange}
+                          placeholder="Ingrese las enfermedades o Infecciones"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Tab>
+              <Tab eventKey={3} title={<span>Anamnesis Personal B</span>}>
+                <div className="content">
+                  <div className="form-horizontal">
+                    <div className="form-group">
+                      <label className="control-label col-md-2">
+                        Estado del niño al nacer:
+                      </label>
+                      <div className="col-md-10">
+                        <Input
+                          type="textarea"
+                          rows="2"
+                          name="estadoNacer"
+                          id="estadoNacer"
+                          value={this.state.anamesisDolorfrecuencia} //ppppppp
+                          onChange={this.handleInputChange}
+                          placeholder="Ingrese las enfermedades o Infecciones"
+                        />
+                      </div>
+                    </div>
+
+                    <legend />
+                    <div className="form-group">
+                      <label className="control-label col-md-2">
+                        Necesidad Incubadora:
+                      </label>
+                      <div className="col-md-3">
+                        <Input
+                          type="text"
+                          name="necesidadIncubadora"
+                          id="necesidadIncubadora"
+                          value={this.state.necesidadIncubadora} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+
+                      <label className="control-label col-md-2">
+                        Malformación:
+                      </label>
+                      <div className="col-md-2">
+                        <Input
+                          type="text"
+                          name="malformacion"
+                          id="malformacion"
+                          value={this.state.malformacion} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+
+                      <label className="control-label col-md-1">Tiempo:</label>
+                      <div className="col-md-2">
+                        <Input
+                          type="text"
+                          name="cuantotiempo"
+                          id="cuantotiempo"
+                          value={this.state.cuantotiempo} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                    </div>
+                    <legend />
+
+                    <div className="form-group">
+                      <label className="control-label col-md-2">
+                        Tipo de Alimentación:
+                      </label>
+                      <div className="col-md-3">
+                        <Input
+                          type="text"
+                          name="necesidadIncubadora"
+                          id="necesidadIncubadora"
+                          value={this.state.necesidadIncubadora} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+
+                      <label className="control-label col-md-2">
+                        Hasta qué edad:
+                      </label>
+                      <div className="col-md-1">
+                        <Input
+                          type="text"
+                          name="malformacion"
+                          id="malformacion"
+                          value={this.state.malformacion} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+
+                      <label className="control-label col-md-2">
+                        Dificultad de Succión:
+                      </label>
+                      <div className="col-md-2">
+                        <Input
+                          type="text"
+                          name="cuantotiempo"
+                          id="cuantotiempo"
+                          value={this.state.cuantotiempo} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                    </div>
+                    <legend />
+
+                    <div className="form-group">
+                      <label className="control-label col-md-2">
+                        Duerme solo:
+                      </label>
+                      <div className="col-md-2">
+                        <Input
+                          type="text"
+                          name="necesidadIncubadora"
+                          id="necesidadIncubadora"
+                          value={this.state.necesidadIncubadora} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+
+                      <label className="control-label col-md-3">
+                        Necesita Luz para Dormir:
+                      </label>
+                      <div className="col-md-1">
+                        <Input
+                          type="text"
+                          name="malformacion"
+                          id="malformacion"
+                          value={this.state.malformacion} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+
+                      <label className="control-label col-md-2">
+                        Traumatismo:
+                      </label>
+                      <div className="col-md-2">
+                        <Input
+                          type="text"
+                          name="cuantotiempo"
+                          id="cuantotiempo"
+                          value={this.state.cuantotiempo} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                    </div>
+                    <legend />
+
+                    <div className="form-group">
+                      <label className="control-label col-md-2">
+                        Enfermedad que presenta el niño/a:
+                      </label>
+                      <div className="col-md-10">
+                        <Input
+                          type="textarea"
+                          rows="2"
+                          name="estadoNacer"
+                          id="estadoNacer"
+                          value={this.state.anamesisDolorfrecuencia} //ppppppp
+                          onChange={this.handleInputChange}
+                          placeholder="Ingrese las enfermedades o Infecciones"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Tab>
+
+              <Tab eventKey={4} title={<span>Desarrollo Motor</span>}>
+                <div className="content">
+                  <div className="form-horizontal">
+                    <div className="form-group">
+                      <label className="control-label col-md-2">
+                        Sostuvo la cabeza:
+                      </label>
+                      <div className="col-md-2">
+                        <Input
+                          type="text"
+                          name="sostuvoCabeza"
+                          id="sostuvoCabeza"
+                          value={this.state.sostuvoCabeza} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+
+                      <label className="control-label col-md-3">
+                        Se sentó:
+                      </label>
+                      <div className="col-md-1">
+                        <Input
+                          type="text"
+                          name="malformacion"
+                          id="malformacion"
+                          value={this.state.malformacion} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+
+                      <label className="control-label col-md-2">Gateó:</label>
+                      <div className="col-md-2">
+                        <Input
+                          type="text"
+                          name="cuantotiempo"
+                          id="cuantotiempo"
+                          value={this.state.cuantotiempo} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                    </div>
+                    <legend />
+
+                    <div className="form-group">
+                      <label className="control-label col-md-2">Se paró:</label>
+                      <div className="col-md-2">
+                        <Input
+                          type="text"
+                          name="sostuvoCabeza"
+                          id="sostuvoCabeza"
+                          value={this.state.sostuvoCabeza} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+
+                      <label className="control-label col-md-3">
+                        Caminó solo:
+                      </label>
+                      <div className="col-md-1">
+                        <Input
+                          type="text"
+                          name="malformacion"
+                          id="malformacion"
+                          value={this.state.malformacion} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+
+                      <label className="control-label col-md-2">Otro:</label>
+                      <div className="col-md-2">
+                        <Input
+                          type="text"
+                          name="cuantotiempo"
+                          id="cuantotiempo"
+                          value={this.state.cuantotiempo} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                    </div>
+                    <legend />
+                  </div>
+                </div>
+              </Tab>
+
+              <Tab eventKey={5} title={<span>Desarrollo del Lenguaje</span>}>
+                <div className="content">
+                  <div className="form-horizontal">
+                    <div className="form-group">
+                      <label className="control-label col-md-1">Sonrisa:</label>
+                      <div className="col-md-2">
+                        <Input
+                          type="text"
+                          name="sostuvoCabeza"
+                          id="sostuvoCabeza"
+                          value={this.state.sostuvoCabeza} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+
+                      <label className="control-label col-md-1">Gorjeo:</label>
+                      <div className="col-md-2">
+                        <Input
+                          type="text"
+                          name="malformacion"
+                          id="malformacion"
+                          value={this.state.malformacion} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+
+                      <label className="control-label col-md-1">
+                        Balbuceo:
+                      </label>
+                      <div className="col-md-2">
+                        <Input
+                          type="text"
+                          name="cuantotiempo"
+                          id="cuantotiempo"
+                          value={this.state.cuantotiempo} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+
+                      <label className="control-label col-md-1">Laleo:</label>
+                      <div className="col-md-2">
+                        <Input
+                          type="text"
+                          name="cuantotiempo"
+                          id="cuantotiempo"
+                          value={this.state.cuantotiempo} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                    </div>
+                    <legend />
+
+                    <div className="form-group">
+                      <label className="control-label col-md-2">
+                        Primeras palabras:
+                      </label>
+                      <div className="col-md-4">
+                        <Input
+                          type="text"
+                          name="motivoIngreso"
+                          id="motivoIngreso"
+                          value={this.state.motivoIngreso} //ppppppp
+                          onChange={this.handleInputChange}
+                          placeholder="Al momeneto de la cocepción"
+                        />
+                      </div>
+                      <label className="control-label col-md-2">
+                        Frases de dos palabras:
+                      </label>
+                      <div className="col-md-4">
+                        <Input
+                          type="text"
+                          name="motivoIngreso"
+                          id="motivoIngreso"
+                          value={this.state.motivoIngreso} //ppppppp
+                          onChange={this.handleInputChange}
+                          placeholder="Ingrese la duración"
+                        />
+                      </div>
+                    </div>
+                    <legend />
+
+                    <div className="form-group">
+                      <label className="control-label col-md-2">
+                        Oraciones completas:
+                      </label>
+                      <div className="col-md-4">
+                        <Input
+                          type="text"
+                          name="motivoIngreso"
+                          id="motivoIngreso"
+                          value={this.state.motivoIngreso} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                      <label className="control-label col-md-2">
+                        Comprende el NO:
+                      </label>
+                      <div className="col-md-4">
+                        <Input
+                          type="text"
+                          name="motivoIngreso"
+                          id="motivoIngreso"
+                          value={this.state.motivoIngreso} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                    </div>
+                    <legend />
+
+                    <div className="form-group">
+                      <label className="control-label col-md-2">
+                        Comportamiento:
+                      </label>
+                      <div className="col-md-10">
+                        <Input
+                          type="textarea"
+                          rows="2"
+                          name="comportamiento"
+                          id="comportamiento"
+                          value={this.state.comportamiento} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Tab>
+              <Tab eventKey={6} title={<span>Anamnesis Familiar</span>}>
+                <div className="content">
+                  <div className="form-horizontal">
+                    <div className="form-group">
+                      <label className="control-label col-md-2">
+                        Enfermedad del Padre:
+                      </label>
+                      <div className="col-md-5">
+                        <Input
+                          type="text"
+                          name="emfermedadPadre"
+                          id="emfermedadPadre"
+                          value={this.state.emfermedadPadre} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label className="control-label col-md-2">
+                        Enfermedad de la Madre:
+                      </label>
+                      <div className="col-md-5">
+                        <Input
+                          type="textarea"
+                          rows="1"
+                          name="enfermedadMadre"
+                          id="enfermedadMadre"
+                          value={this.state.enfermedadMadre}
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label className="control-label col-md-2">
+                        Familiares Paternos con Discapacidad:
+                      </label>
+                      <div className="col-md-5">
+                        <Input
+                          type="textarea"
+                          rows="2"
+                          name="anamesisDolorfrecuencia"
+                          id="anamesisDolorfrecuencia"
+                          value={this.state.anamesisDolorfrecuencia} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label className="control-label col-md-2">
+                        Familiares Maternos con Discapacidad:
                       </label>
                       <div className="col-md-5">
                         <Input
                           type="textarea"
                           name="anamesisDolorevolucion"
                           id="anamesisDolorevolucion"
-                          rows="3"
+                          rows="2"
                           value={this.state.anamesisDolorevolucion} //ppppppp
                           onChange={this.handleInputChange}
-                          placeholder="Ingrese la evolución"
                         />
                       </div>
                     </div>
                   </div>
                 </div>
               </Tab>
-              <Tab eventKey={5} title={<span>Exploración Física</span>}>
+
+              <Tab eventKey={7} title={<span>Desarrollo Psicosocial</span>}>
                 <div className="content">
-                  <div className="form-group">
-                    <Label for="datosADolor">Observaciones:</Label>
-                    <Input
-                      type="textarea"
-                      name="exploFisicaobservaciones"
-                      id="exploFisicaobservaciones"
-                      rows="2"
-                      value={this.state.exploFisicaobservaciones}
-                      onChange={this.handleInputChange}
-                      placeholder="Ingrese los antecedentes aquí"
-                    />
-                  </div>
-
-                  <div className="form-froup">
-                    <Label for="datosADolor">Impresión Diagnostica:</Label>
-                    <Input
-                      type="textarea"
-                      name="exploFisicaimpDiagnostica"
-                      id="exploFisicaimpDiagnostica"
-                      rows="3"
-                      value={this.state.exploFisicaimpDiagnostica}
-                      onChange={this.handleInputChange}
-                      placeholder="Ingrese los antecedentes familiares aquí"
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <MyAutoCompleteField
-                      items={this.state.dataCodes}
-                      onChange={this.MyOnChangeAutoComplete}
-                      id="exploFisicaciedescrip"
-                      label="Código CIE10:"
-                      name="descrip"
-                      placeholder="Enfermedad"
-                    />
-                  </div>
-                </div>
-              </Tab>
-              <Tab eventKey={6} title={<span>Tratamiento</span>}>
-                <div>
-                  <fieldset>
-                    <label className="col-sm-2">Medios Químicos:</label>
-                    <div className="col-sm-3 col-sm-offset-1 checkbox-group">
-                      <div>
-                        <label>
-                          <Input
-                            type="checkbox"
-                            name="mquimicosultrasonido"
-                            value={this.state.mquimicosultrasonido}
-                            onChange={this.handleInputChange}
-                          />{" "}
-                          Ultrasonido
-                        </label>
-                      </div>
-                      <div>
-                        <label>
-                          <Input
-                            type="checkbox"
-                            name="mquimicosmagnetoterapia"
-                            value={this.state.mquimicosmagnetoterapia}
-                            onChange={this.handleInputChange}
-                          />{" "}
-                          Magnetoterapia
-                        </label>
-                      </div>
-                      <div>
-                        <label>
-                          <Input
-                            type="checkbox"
-                            name="mquimicosondasChoque"
-                            value={this.state.mquimicosondasChoque}
-                            onChange={this.handleInputChange}
-                          />{" "}
-                          Ondas de Choque
-                        </label>
-                      </div>
-                      <div>
-                        <label>
-                          <Input
-                            type="checkbox"
-                            name="mquimicosparafina"
-                            value={this.state.mquimicosparafina}
-                            onChange={this.handleInputChange}
-                          />{" "}
-                          Parafina
-                        </label>
-                      </div>
-                    </div>
-                    <div className="col-sm-3 checkbox-group">
-                      <div>
-                        <label>
-                          <Input
-                            type="checkbox"
-                            name="mquimicoselectroEstim"
-                            value={this.state.mquimicoselectroEstim}
-                            onChange={this.handleInputChange}
-                          />{" "}
-                          Electro Estimulación
-                        </label>
-                      </div>
-                      <div>
-                        <label>
-                          <Input
-                            type="checkbox"
-                            name="mquimicosLaser"
-                            value={this.state.mquimicosLaser}
-                            onChange={this.handleInputChange}
-                          />{" "}
-                          Laser
-                        </label>
-                      </div>
-                      <div>
-                        <label>
-                          <Input
-                            type="checkbox"
-                            name="mquimicosnebulizacion"
-                            value={this.state.mquimicosnebulizacion}
-                            onChange={this.handleInputChange}
-                          />{" "}
-                          Nebulización
-                        </label>
-                      </div>
-                    </div>
-                  </fieldset>
-                  <fieldset>
-                    <legend />
-                    <label className="col-sm-2">Medios Físicos:</label>
-                    <div className="col-sm-3 col-sm-offset-1 checkbox-group">
-                      <div>
-                        <label>
-                          <Input
-                            type="checkbox"
-                            name="mfisicoscompresQuimicas"
-                            value={this.state.mfisicoscompresQuimicas}
-                            onChange={this.handleInputChange}
-                          />{" "}
-                          Compresas Químicas
-                        </label>
-                      </div>
-                      <div>
-                        <label>
-                          <Input
-                            type="checkbox"
-                            name="mfisicosmasoterapia"
-                            value={this.state.mfisicosmasoterapia}
-                            onChange={this.handleInputChange}
-                          />{" "}
-                          Masoterapia
-                        </label>
-                      </div>
-                    </div>
-                    <div className="col-sm-3 checkbox-group">
-                      <div>
-                        <label>
-                          <Input
-                            type="checkbox"
-                            name="mfisicoscrioterapia"
-                            value={this.state.mfisicoscrioterapia}
-                            onChange={this.handleInputChange}
-                          />{" "}
-                          Crioterapia
-                        </label>
-                      </div>
-                      <div>
-                        <label>
-                          <Input
-                            type="checkbox"
-                            name="mfisicosto"
-                            value={this.state.mfisicosto}
-                            onChange={this.handleInputChange}
-                          />{" "}
-                          T.O.
-                        </label>
-                      </div>
-                    </div>
-                  </fieldset>
-                  <fieldset>
-                    <legend />
-                    <label className="col-sm-2">Ejercicios Terapeuticos:</label>
-                    <div className="col-sm-3 col-sm-offset-1 checkbox-group">
-                      <div>
-                        <label>
-                          <Input
-                            type="checkbox"
-                            name="ejerTerapeuticosactivos"
-                            value={this.state.ejerTerapeuticosactivos}
-                            onChange={this.handleInputChange}
-                          />{" "}
-                          Activos
-                        </label>
-                      </div>
-                      <div>
-                        <label>
-                          <Input
-                            type="checkbox"
-                            name="ejerTerapeuticospasivos"
-                            value={this.state.ejerTerapeuticospasivos}
-                            onChange={this.handleInputChange}
-                          />{" "}
-                          Pasivos
-                        </label>
-                      </div>
-                    </div>
-                    <div className="col-sm-3 checkbox-group">
-                      <div>
-                        <label>
-                          <Input
-                            type="checkbox"
-                            name="ejerTerapeuticosactivosAsistidos"
-                            value={this.state.ejerTerapeuticosactivosAsistidos}
-                            onChange={this.handleInputChange}
-                          />{" "}
-                          Activos Asistidos
-                        </label>
-                      </div>
-                      <div>
-                        <label>
-                          <Input
-                            type="checkbox"
-                            name="ejerTerapeuticosActivosResistidos"
-                            value={this.state.ejerTerapeuticosActivosResistidos}
-                            onChange={this.handleInputChange}
-                          />{" "}
-                          Activos Resistidos
-                        </label>
-                      </div>
-                    </div>
-                  </fieldset>
-                  <div>
-                    <fieldset>
-                      <legend />
-                      <Label for="notaTratamiento">Nota:</Label>
-                      <Input
-                        type="textarea"
-                        name="ejerTerapeuticosnota"
-                        id="ejerTerapeuticosnota"
-                        rows="1"
-                        value={this.state.ejerTerapeuticosnota}
-                        onChange={this.handleInputChange}
-                        placeholder="Ingrese su mensaje"
-                      />
-                    </fieldset>
-                  </div>
-                </div>
-              </Tab>
-              <Tab eventKey={7} title={<span>Seguimiento</span>}>
-                <div className="row">
-                  <div className="col-md-2">
-                    <Label for="evoluPac">Fecha:</Label>
+                  <div className="form-horizontal">
                     <div className="form-group">
-                      <SingleDatePicker
-                        date={date}
-                        onDateChange={date => this.setState({ date })}
-                        focused={this.state.focused}
-                        onFocusChange={({ focused }) =>
-                          this.setState({ focused })
-                        }
-                      />
+                      <label className="control-label col-md-2">
+                        Con quién vive el niño/a:
+                      </label>
+                      <div className="col-md-5">
+                        <Input
+                          type="text"
+                          name="emfermedadPadre"
+                          id="emfermedadPadre"
+                          value={this.state.emfermedadPadre} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label className="control-label col-md-2">
+                        Como se relaciona con los padres:
+                      </label>
+                      <div className="col-md-5">
+                        <Input
+                          type="textarea"
+                          rows="1"
+                          name="enfermedadMadre"
+                          id="enfermedadMadre"
+                          value={this.state.enfermedadMadre}
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label className="control-label col-md-2">
+                        Como se relaciona con los hermanos:
+                      </label>
+                      <div className="col-md-5">
+                        <Input
+                          type="textarea"
+                          rows="1"
+                          name="anamesisDolorfrecuencia"
+                          id="anamesisDolorfrecuencia"
+                          value={this.state.anamesisDolorfrecuencia} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label className="control-label col-md-2">
+                        Como se relaciona con los familiares:
+                      </label>
+                      <div className="col-md-5">
+                        <Input
+                          type="textarea"
+                          name="anamesisDolorevolucion"
+                          id="anamesisDolorevolucion"
+                          rows="1"
+                          value={this.state.anamesisDolorevolucion} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label className="control-label col-md-2">
+                        Como se relaciona con los amigos:
+                      </label>
+                      <div className="col-md-5">
+                        <Input
+                          type="textarea"
+                          name="anamesisDolorevolucion"
+                          id="anamesisDolorevolucion"
+                          rows="1"
+                          value={this.state.anamesisDolorevolucion} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
                     </div>
                   </div>
-                  <div className="col-md-5">
-                    <FormGroup>
-                      <Label for="evoluPac">Tratamiento:</Label>
-                      <Input
-                        type="textarea"
-                        name="seguimientotratamiento"
-                        id="seguimientotratamiento"
-                        rows="6"
-                        value={this.state.seguimientotratamiento}
-                        onChange={this.handleInputChange}
-                        placeholder="Ingrese los detalles de la evolución"
-                      />
-                    </FormGroup>
+                </div>
+              </Tab>
+
+              <Tab eventKey={8} title={<span>Diagnóstico</span>}>
+                <div className="content">
+                  <div className="form-horizontal">
+                    <div className="form-group">
+                      <label className="control-label col-md-4">
+                        Diagnóstico médico durante el embarazo:
+                      </label>
+                      <div className="col-md-8">
+                        <Input
+                          type="textarea"
+                          name="emfermedadPadre"
+                          id="emfermedadPadre"
+                          rows="2"
+                          value={this.state.emfermedadPadre} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label className="control-label col-md-4">
+                        Diagnóstico médico después del nacimiento:
+                      </label>
+                      <div className="col-md-8">
+                        <Input
+                          type="textarea"
+                          rows="2"
+                          name="enfermedadMadre"
+                          id="enfermedadMadre"
+                          value={this.state.enfermedadMadre}
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                    </div>
                   </div>
-                  <div className="col-md-5">
-                    <FormGroup>
-                      <Label for="prescripPac">Indicaciones:</Label>
-                      <Input
-                        type="textarea"
-                        name="seguimientoindicaciones"
-                        id="seguimientoindicaciones"
-                        rows="6"
-                        value={this.state.seguimientoindicaciones}
-                        onChange={this.handleInputChange}
-                        placeholder="Ingrese la prescripción"
-                      />
-                    </FormGroup>
+                </div>
+              </Tab>
+
+              <Tab eventKey={9} title={<span>Tratamiento</span>}>
+                <div className="content">
+                  <div className="form-horizontal">
+                    <div className="form-group">
+                      <label className="control-label col-md-4">
+                        Tipo de Alimentación:
+                      </label>
+                      <div className="col-md-8">
+                        <Input
+                          type="textarea"
+                          name="emfermedadPadre"
+                          id="emfermedadPadre"
+                          rows="1"
+                          value={this.state.emfermedadPadre} //ppppppp
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label className="control-label col-md-4">
+                        ¿Que tipos de tratamiento o terapias ha recibido?:
+                      </label>
+                      <div className="col-md-8">
+                        <Input
+                          type="textarea"
+                          rows="1"
+                          name="enfermedadMadre"
+                          id="enfermedadMadre"
+                          value={this.state.enfermedadMadre}
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label className="control-label col-md-4">
+                        ¿En qué terapias está actualmente?:
+                      </label>
+                      <div className="col-md-8">
+                        <Input
+                          type="textarea"
+                          rows="1"
+                          name="enfermedadMadre"
+                          id="enfermedadMadre"
+                          value={this.state.enfermedadMadre}
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label className="control-label col-md-4">
+                        ¿Toma algún tipo de medicamentos, dosis?:
+                      </label>
+                      <div className="col-md-8">
+                        <Input
+                          type="textarea"
+                          rows="1"
+                          name="enfermedadMadre"
+                          id="enfermedadMadre"
+                          value={this.state.enfermedadMadre}
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Tab>
+
+              <Tab
+                eventKey={10}
+                title={<span>Recomendaciones y Observaciones</span>}
+              >
+                <div className="content">
+                  <div className="form-horizontal">
+                    <div className="form-group">
+                      <label className="control-label col-md-4">
+                        Recomendaciones:
+                      </label>
+                      <div className="col-md-8">
+                        <Input
+                          type="textarea"
+                          rows="2"
+                          name="enfermedadMadre"
+                          id="enfermedadMadre"
+                          value={this.state.enfermedadMadre}
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label className="control-label col-md-4">
+                        Observaciones:
+                      </label>
+                      <div className="col-md-8">
+                        <Input
+                          type="textarea"
+                          rows="2"
+                          name="enfermedadMadre"
+                          id="enfermedadMadre"
+                          value={this.state.enfermedadMadre}
+                          onChange={this.handleInputChange}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </Tab>
