@@ -17,10 +17,6 @@ const apiEndpointTerapiaFisica =
 const endPointCodeCie =
   "http://ec2-34-216-62-59.us-west-2.compute.amazonaws.com:5000/cies/";
 
-const ciesStyle = {
-  width: "338px"
-};
-
 /* onst endPointCodeCie = "http://192.168.1.10:5000/cies/"; */
 class TabChild extends Component {
   constructor(props) {
@@ -137,6 +133,7 @@ class TabChild extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     //this.handleChecked = this.handleChecked.bind(this);
 
+    this.handleKeyPress = this.handleKeyPress.bind(this);
     this.MyOnChangeAutoComplete = this.MyOnChangeAutoComplete.bind(this);
   }
 
@@ -146,6 +143,24 @@ class TabChild extends Component {
     // USE .filter()  para obtener los datos de la fecha seleccionada
     //
   };
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.handleKeyPress);
+  }
+
+  // PARA MANEJAR EL KEYPRESS
+  handleKeyPress(e) {
+    this.setState({ currentKey: e.keyCode });
+    if (e.keyCode === 83) {
+      console.log("You just pressed Escape!");
+      let currentTab = this.state.activeTab;
+      if (currentTab === 7) {
+        this.setState({ activeTab: 1 });
+      } else {
+        this.setState({ activeTab: currentTab + 1 });
+      }
+    }
+  }
 
   // JOI VALIDATION: schema and validateTF
   schema = {
@@ -167,6 +182,7 @@ class TabChild extends Component {
       console.log(response.data);
     });
 
+    document.addEventListener("keydown", this.handleKeyPress);
     //this.getJsonHistorialFecha();
   }
 
@@ -219,7 +235,7 @@ class TabChild extends Component {
     let hpfdescrip = dataJson.istProblemFuncdescription;
     // anamesis del dolor
     let adduracion = dataJson.anamesisDolorduracion;
-    let adintesidad = dataJson.anamesisDolorescalaIntensidad;
+    let adintesidad = dataJson.anamesisDolIN;
     let adfrecuencia = dataJson.anamesisDolorfrecuencia;
     let adhorario = dataJson.anamesisDolorhorario;
     let adrevolucion = dataJson.anamesisDolorevolucion;
@@ -411,7 +427,7 @@ class TabChild extends Component {
       });
       console.log("DATOS", this.state.jsonDataForFechaIdMongoOnTab);
       console.log("PROPS", this.props.jsonDataForFechaIdMongo);
-      this.setState({ antecedentesdescripAntYOtros: "hola israel dale" });
+      //this.setState({ antecedentesdescripAntYOtros: "SETEANDO DATOS" });
       console.log("se actualizo el estado en el component TabChild");
     }
     if (this.props.banderaClean !== this.state.banderaTabClean) {
@@ -840,9 +856,9 @@ class TabChild extends Component {
                       <div className="col-md-5">
                         <Input
                           type="number"
-                          name="anamesisDolorescalaIntensidad"
-                          id="anamesisDolorescalaIntensidad"
-                          value={this.state.anamesisDolorescalaIntensidad}
+                          name="anamesisDolIN"
+                          id="anamesisDolIN"
+                          value={this.state.anamesisDolIN}
                           onChange={this.handleInputChange}
                           placeholder="Ingrese la escala de intensidad"
                         />
@@ -928,7 +944,6 @@ class TabChild extends Component {
 
                   <div className="form-group">
                     <MyAutoCompleteField
-                      style={ciesStyle}
                       items={this.state.dataCodes}
                       onChange={this.MyOnChangeAutoComplete}
                       id="exploFisicaciedescrip"

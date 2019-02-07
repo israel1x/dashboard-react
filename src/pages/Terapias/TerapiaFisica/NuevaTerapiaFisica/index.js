@@ -27,7 +27,8 @@ class NuevaTerapiaFisica extends Component {
       ],
       dataFormHistorialId: [],
       bandera: 0,
-      banderaClean: 0
+      banderaClean: 0,
+      modalState: false
     };
     this.sendBanderaCleanForm = this.sendBanderaCleanForm.bind(this);
   }
@@ -89,6 +90,11 @@ class NuevaTerapiaFisica extends Component {
   handleChangeSelect = fechaSelecionada => {
     this.setState({ fechaSelecionada });
 
+    // MODAL
+    /* this.setState({ modalState: true });
+    console.log("ESTADO DEL MODAL", this.state.modalState); */
+    ///////////////////
+
     console.log(`Eligio:`, fechaSelecionada.value);
 
     this.getJsonHistorialFecha(fechaSelecionada.value);
@@ -109,6 +115,10 @@ class NuevaTerapiaFisica extends Component {
     }
   }
 
+  /* handleClose() {
+    this.setState({ show: false });
+  } */
+
   render() {
     //console.log("bsajdjsdfsbfjksbfkjbskdfb");
     return (
@@ -116,6 +126,8 @@ class NuevaTerapiaFisica extends Component {
         <div className="row">
           <div className="col-md-12">
             <BuscarDatosPaciente
+              stateOfModal={this.state.modalState}
+              cerrarM={this.handleClose}
               idPacienteTf={"2000"}
               idHistoriaFecha={""}
               dataJsonHistorias={""}

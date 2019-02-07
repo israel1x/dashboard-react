@@ -132,26 +132,6 @@ class Nav extends Component {
                 >
                   <Link to="/psicologia/nuevapsicologia">Nueva Consulta</Link>
                 </li>
-                {/* <li
-                  className={
-                    this.isPathActive("/tables/extended-tables")
-                      ? "active"
-                      : null
-                  }
-                >
-                  <Link to="/tables/extended-tables">Extended Tables</Link>
-                </li> */}
-                {/* <li
-                  className={
-                    this.isPathActive("/tables/fixed-data-table")
-                      ? "active"
-                      : null
-                  }
-                >
-                  <Link to="/tables/react-bootstrap-table">
-                    React Bootstrap Table
-                  </Link>
-                </li> */}
               </ul>
             </div>
           </Collapse>

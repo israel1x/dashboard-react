@@ -11,6 +11,7 @@ import {
   Label,
   Row
 } from "reactstrap";
+import Modalreport from "./ModalReporte";
 
 const formStyles = {
   margin: "15px"
@@ -47,8 +48,12 @@ class BuscarDatosPaciente extends Component {
         },
         { value: "2019-03-01T16:00:00.000Z", label: "marzo" }
       ], */
-      fechaSelecionada: ""
+      fechaSelecionada: "",
+      show: false
     };
+
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.mostrarAlert = this.mostrarAlert.bind(this);
@@ -108,6 +113,15 @@ class BuscarDatosPaciente extends Component {
     console.log(`Eligio:`, fechaSelecionada);
   }; */
 
+  handleClose() {
+    this.setState({ show: false });
+  }
+
+  handleShow() {
+    this.setState({ show: true });
+    console.log(this.state.show);
+  }
+
   handleSubmit(event) {
     event.preventDefault();
 
@@ -116,9 +130,17 @@ class BuscarDatosPaciente extends Component {
   }
 
   render() {
+    /* let modalClose = () => this.setState({ show: false }); */
     return (
       <div className="contenedor-box">
         <div>Datos Paciente</div>
+        {/* <Button variant="primary" onClick={this.handleShow}>
+          Launch demo modal
+        </Button> */}
+        <Modalreport
+          showM={this.props.stateOfModal}
+          cerrarModal={this.props.cerrarM}
+        />
         <Card className="card-contenedor" body outline color="info">
           <CardBody>
             <form style={formStyles} onSubmit={this.handleSubmit}>
